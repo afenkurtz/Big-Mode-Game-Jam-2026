@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://dbna4owvradr3"]
+
+[ext_resource type="PackedScene" uid="uid://cvnusflbvyips" path="res://scenes/player.tscn" id="1_6ulkd"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_agfs1"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_rkhd4"]
+
+[sub_resource type="Environment" id="Environment_agfs1"]
+background_mode = 2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rkhd4"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_lrhn5"]
+
+[node name="Node3D" type="Node3D" unique_id=1535340670]
+
+[node name="CharacterBody3D" parent="." unique_id=1220649139 instance=ExtResource("1_6ulkd")]
+
+[node name="Floor" type="StaticBody3D" parent="." unique_id=839882316]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4704423, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=763668703]
+transform = Transform3D(50, 0, 0, 0, 50, 0, 0, 0, 50, 0, -26.01033, 0)
+shape = SubResource("BoxShape3D_agfs1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor" unique_id=373551179]
+transform = Transform3D(50, 0, 0, 0, 50, 0, 0, 0, 50, 0, -26.01033, 0)
+mesh = SubResource("BoxMesh_rkhd4")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1080653778]
+environment = SubResource("Environment_agfs1")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=457534606]
+transform = Transform3D(1, 0, 0, 0, 0.5644196, 0.82548803, 0, -0.82548803, 0.5644196, 0, 15.25749, 0)
+
+[node name="ramp1" type="StaticBody3D" parent="." unique_id=345485711]
+transform = Transform3D(3, 0, 0, 0, 2.3921516, -1.8104172, 0, 1.8104172, 2.3921516, -14.860468, -1.8097024, -1.3583801)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ramp1" unique_id=1422593146]
+shape = SubResource("BoxShape3D_rkhd4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ramp1" unique_id=1767077915]
+mesh = SubResource("BoxMesh_lrhn5")
+
+[node name="ramp2" type="StaticBody3D" parent="." unique_id=1199079249]
+transform = Transform3D(8.999999, 0, 0, 0, 8.120219, 3.8809783, 0, -3.8809783, 8.120219, -14.825205, -6.8099337, -12.978409)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ramp2" unique_id=1549552207]
+shape = SubResource("BoxShape3D_rkhd4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ramp2" unique_id=1622854231]
+mesh = SubResource("BoxMesh_lrhn5")
