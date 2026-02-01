@@ -1,7 +1,7 @@
 extends RigidBody3D
 
 var velocity = Vector3.ZERO
-var damage = 10.0
+var damage = 25.0
 var lifetime = 5.0
 
 func _ready():

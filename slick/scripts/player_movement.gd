@@ -9,22 +9,17 @@ extends CharacterBody3D
 #attack parameters
 @export var stab_range = 6.0
 @export var stab_damage = 25.0
-@export var stab_charge_multiplier = 2.0
-@export var max_charge_time = 1.0
-@export var projectile_speed = 40.0
+@export var projectile_speed = 35.0
 @export var projectile_scene: PackedScene #assign in inspector
 
 @export var debug_visuals = true 
 
 #combo system
 @export var combo_window = 1.0 # time window to continue attack
+@export var combo_cooldown = 1.0 # Cooldown after completing a 3 hit combo
 var combo_count = 0 # current hit in combo 0,1,2
 var combo_timer = 0.0 # time since last attack
-
-#charging system
-var is_charging_stab = false
-var charge_start_time = 0.0
-var charge_amount = 0.0 # 0 - 1
+var is_in_cooldown = false # Tracks if we're in post-combo cooldown
 
 # Physics
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -37,9 +32,16 @@ func _physics_process(delta):
 	if combo_timer > 0:
 		combo_timer -= delta
 		if combo_timer <= 0:
-			#combo window expired, new window
-			combo_count = 0
-			print("Combo Reset")
+			if is_in_cooldown:
+				# Cooldown finished
+				is_in_cooldown = false
+				#combo window expired, new window
+				combo_count = 0
+				print("Combo Reset")
+			else:
+				# Combo window expired, reset counternot is_in_cooldown and (combo_count == 0 or combo_timer > 0):
+				combo_count = 0
+				print("Combo reset")
 	
 	# Apply gravity
 	if not is_on_floor():
@@ -55,22 +57,47 @@ func _physics_process(delta):
 	var query = PhysicsRayQueryParameters3D.create(from, to)
 	var result = space_state.intersect_ray(query)
 	
+	var direction = Vector3.ZERO
+	if result: #ensures raycast hits ground
+		var target_pos = result.position
+		direction = (target_pos - global_position).normalized()
+		direction.y=0
+	
 	# Handle burst toward mouse
 	if Input.is_action_just_pressed("move_forward") and result:
+		# Check if we can attack (combo system)
+		var can_attack = not is_in_cooldown and (combo_count == 0 or combo_timer > 0)
 		
-		var target_pos = result.position
-		var direction = (target_pos - global_position).normalized()
-		direction.y = 0  # Keep movement horizontal
-		
-		velocity.x += direction.x * burst_force
-		velocity.z += direction.z * burst_force
-		perform_stab(direction)
-		print("Boosting toward: ", direction)
+		if can_attack:
+			#Perform stab
+			perform_stab(direction)
+			
+			#apply movement in the same direction
+			velocity.x += direction.x * burst_force
+			velocity.z += direction.z * burst_force
+			
+			# Update combo
+			combo_count += 1
+			print("Stab #", combo_count, " of 3")
+			
+			if combo_count >= 3:
+				print("Combo complete! Cooldown starting...")
+				is_in_cooldown = true
+				combo_timer = combo_cooldown # Start cooldown timer
+			else:
+				# Continue combo - give time window for next attack
+				combo_timer = combo_window
+				print("You have ", combo_window, " seconds for next attack")
+		else:
+			if is_in_cooldown:
+				print ("In cooldown! Wait ", combo_timer, " more seconds")
+			else:
+				print("Combo window expired! Can't attack yet.")
 	
 	# Optional: backward burst (away from mouse)
 	if Input.is_action_just_pressed("fire_gun") and result:
 		var target_pos = result.position
-		var direction = (global_position - target_pos).normalized()
+		direction = (global_position - target_pos).normalized()
 		direction.y = 0
 		
 		velocity.x += direction.x * burst_force

@@ -64,7 +64,7 @@ func _physics_process(delta):
 				velocity.x += direction.x * chase_force * delta * 0.5
 				velocity.z += direction.z * chase_force * delta * 0.5
 				
-				print("HOMING! Speed: ", current_speed)
+				#print("HOMING! Speed: ", current_speed)
 			else:
 				# Normal chase outside homing range
 				velocity.x += direction.x * chase_force * delta
