@@ -1,6 +1,9 @@
 [gd_scene format=3 uid="uid://dbna4owvradr3"]
 
 [ext_resource type="PackedScene" uid="uid://cvnusflbvyips" path="res://scenes/player.tscn" id="1_6ulkd"]
+[ext_resource type="PackedScene" uid="uid://dkrsrbcsfrqlg" path="res://scenes/enemy.tscn" id="2_fn2sa"]
+[ext_resource type="PackedScene" uid="uid://br80gkapg0mwv" path="res://scenes/enemy2.tscn" id="3_57l66"]
+[ext_resource type="PackedScene" uid="uid://brq4t28s2xmh8" path="res://scenes/box.tscn" id="4_p21b5"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_agfs1"]
 
@@ -14,8 +17,6 @@ background_mode = 2
 [sub_resource type="BoxMesh" id="BoxMesh_lrhn5"]
 
 [node name="Node3D" type="Node3D" unique_id=1535340670]
-
-[node name="CharacterBody3D" parent="." unique_id=1220649139 instance=ExtResource("1_6ulkd")]
 
 [node name="Floor" type="StaticBody3D" parent="." unique_id=839882316]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4704423, 0)
@@ -51,3 +52,22 @@ shape = SubResource("BoxShape3D_rkhd4")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="ramp2" unique_id=1622854231]
 mesh = SubResource("BoxMesh_lrhn5")
+
+[node name="enemy" parent="." unique_id=782960690 groups=["enemy"] instance=ExtResource("2_fn2sa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20.612194)
+
+[node name="player" parent="." unique_id=1220649139 instance=ExtResource("1_6ulkd")]
+
+[node name="enemy2" parent="." unique_id=179912617 groups=["enemy"] instance=ExtResource("3_57l66")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.231667, 0, 0)
+
+[node name="wall" type="CSGBox3D" parent="." unique_id=1243583516]
+transform = Transform3D(50, 0, 0, 0, 50, 0, 0, 0, 50, 0, -25.275, 0)
+use_collision = true
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="wall" unique_id=813248705]
+transform = Transform3D(0.975, 0, 0, 0, 1, 0, 0, 0, 0.975, 0, 0, 0)
+operation = 2
+
+[node name="StaticBody3D" parent="." unique_id=1520577594 instance=ExtResource("4_p21b5")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, -0.45003748, 10.110325)

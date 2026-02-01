@@ -7,6 +7,7 @@
 [sub_resource type="SphereMesh" id="SphereMesh_dbwdf"]
 
 [node name="RigidBody3D" type="RigidBody3D" unique_id=531033584]
+collision_layer = 2
 script = ExtResource("1_lqp5n")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=112562757]

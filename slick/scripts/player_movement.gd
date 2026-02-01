@@ -7,10 +7,24 @@ extends CharacterBody3D
 @export var max_speed = 30.0
 
 #attack parameters
-@export var stab_range = 3.0
+@export var stab_range = 6.0
 @export var stab_damage = 25.0
+@export var stab_charge_multiplier = 2.0
+@export var max_charge_time = 1.0
 @export var projectile_speed = 40.0
 @export var projectile_scene: PackedScene #assign in inspector
+
+@export var debug_visuals = true 
+
+#combo system
+@export var combo_window = 1.0 # time window to continue attack
+var combo_count = 0 # current hit in combo 0,1,2
+var combo_timer = 0.0 # time since last attack
+
+#charging system
+var is_charging_stab = false
+var charge_start_time = 0.0
+var charge_amount = 0.0 # 0 - 1
 
 # Physics
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -19,9 +33,17 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 @onready var camera = $Camera3D
 
 func _physics_process(delta):
+	# update combo timer
+	if combo_timer > 0:
+		combo_timer -= delta
+		if combo_timer <= 0:
+			#combo window expired, new window
+			combo_count = 0
+			print("Combo Reset")
+	
 	# Apply gravity
 	if not is_on_floor():
-		velocity.y -= gravity * delta/2
+		velocity.y -= gravity * delta/1.5
 	
 	# Get mouse position in world space
 	var mouse_pos = get_viewport().get_mouse_position()
@@ -35,6 +57,7 @@ func _physics_process(delta):
 	
 	# Handle burst toward mouse
 	if Input.is_action_just_pressed("move_forward") and result:
+		
 		var target_pos = result.position
 		var direction = (target_pos - global_position).normalized()
 		direction.y = 0  # Keep movement horizontal
@@ -72,51 +95,131 @@ func _physics_process(delta):
 	move_and_slide()
 
 func perform_stab(direction: Vector3):
-	print ("Stab attack in Direction: ", direction)
+	print("=== STAB DEBUG ===")
 	
-	#raycast forward to detect enemy
 	var space_state = get_world_3d().direct_space_state
-	var stab_start = global_position + Vector3 (0,1,0) # stabs at chest height
-	var stab_end = stab_start + direction * stab_range 
-
-	var query = PhysicsRayQueryParameters3D.create(stab_start, stab_end)
-	query.exclude = [self]
-	var hit = space_state.intersect_ray(query)
+	var stab_duration = 0.125  # How long the hitbox stays active
+	var hit_enemies = []  # Track which enemies we've already hit
 	
-	if hit:
-		print("Stab hit: ", hit.collider.name)
-		#check if hit object has a take_damage method
-		if hit.collider.has_method("take_damage"):
-			hit.collider.take_damage(stab_damage)
-		#this is where we spawn a stab effect
+	# Create a capsule shape for detection
+	var shape = CapsuleShape3D.new()
+	shape.radius = 0.6
+	shape.height = 2.25
+	
+	# Rotate capsule to point in stab direction
+	var look_basis = Basis.looking_at(direction, Vector3.UP)
+	look_basis = look_basis.rotated(look_basis.x, PI / 2.0)
+	
+	# VISUAL DEBUG - Show the capsule that follows player
+	var debug_capsule = null
+	if debug_visuals:
+		debug_capsule = MeshInstance3D.new()
+		add_child(debug_capsule)
+		
+		var capsule_mesh = CapsuleMesh.new()
+		capsule_mesh.radius = shape.radius
+		capsule_mesh.height = shape.height
+		debug_capsule.mesh = capsule_mesh
+		
+		# Set LOCAL position relative to player
+		var local_offset = direction * (stab_range / 3.0)
+		debug_capsule.position = Vector3(0, 1, 0) + local_offset
+		debug_capsule.transform.basis = look_basis
+		
+		# Make it semi-transparent red
+		var material = StandardMaterial3D.new()
+		material.albedo_color = Color(1, 0, 0, 0.3)
+		material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		debug_capsule.material_override = material
+	
+	# Create a timer to track elapsed time
+	var elapsed = 0.0
+	var check_interval = 0.05  # Check every 0.05 seconds (20 times per second)
+	
+	# Keep checking for hits while the stab is active
+	while elapsed < stab_duration:
+		await get_tree().create_timer(check_interval).timeout
+		elapsed += check_interval
+		
+		# Check if player still exists (in case they die during stab)
+		if not is_instance_valid(self):
+			break
+		
+		# Update hitbox position to follow player
+		var stab_start = global_position + Vector3(0, 1, 0)
+		var stab_center = stab_start + direction * (stab_range / 3.0)
+		var capsule_transform = Transform3D(look_basis, stab_center)
+		
+		# Check for collisions at current position
+		var params = PhysicsShapeQueryParameters3D.new()
+		params.shape = shape
+		params.transform = capsule_transform
+		params.collision_mask = 1
+		params.exclude = [self]
+		
+		var results = space_state.intersect_shape(params)
+		
+		# Check each result
+		for result in results:
+			if result.collider.is_in_group("enemy"):
+				# Only hit each enemy once per stab
+			
+				if not hit_enemies.has(result.collider):
+					var to_enemy = (result.collider.global_position - global_position).normalized()
+					var dot = direction.dot(to_enemy)
+					
+					if dot > 0.5:
+						print("Hit enemy: ", result.collider.name)
+						if result.collider.has_method("take_damage"):
+							result.collider.take_damage(stab_damage)
+							hit_enemies.append(result.collider)
+							
+							# Turn capsule green on hit
+							if debug_capsule and is_instance_valid(debug_capsule):
+								var hit_material = StandardMaterial3D.new()
+								hit_material.albedo_color = Color(0, 1, 0, 0.5)
+								hit_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+								debug_capsule.material_override = hit_material
+			elif result.collider.is_in_group("breakable"):
+				if not hit_enemies.has(result.collider):
+					print ("Hit breakable object: ", result.collider.name)
+					if result.collider.has_method("take_damage"):
+						result.collider.take_damage(stab_damage)
+						hit_enemies.append(result.collider)
+	
+	# Clean up debug visual
+	if debug_capsule and is_instance_valid(debug_capsule):
+		debug_capsule.queue_free()
+	
+	print("Stab finished. Hit ", hit_enemies.size(), " enemies")
+	print("==================")
+
 		
 func fire_projectile(direction: Vector3):
-	print ("Firing projectile in direction: ", direction)
-	print ("Player position: ", global_position)
+	print("=== FIRING PROJECTILE ===")
+	print("Direction: ", direction)
 	
 	if projectile_scene == null:
 		print("Warning: No projectile scene assigned!")
 		return
-		
-	#spawn projectile
+	
+	# Spawn projectile
 	var projectile = projectile_scene.instantiate()
 	get_parent().add_child(projectile)
 	
-	#position projectile between player and mouse target
-	#var spawn_pos = global_position.lerp(target_pos, 0.2)
-	#spawn_pos.y = global_position.y +1
-	#projectile.global_position = spawn_pos
+	# Position it in front of player
+	var spawn_offset = direction * 1.0
+	projectile.global_position = global_position + Vector3(0, 1, 0) + spawn_offset
 	
+	print("Projectile spawned at: ", projectile.global_position)
 	
-	#positions the projectile in front of the player
-	var spawn_offset = direction * 2.0
-	projectile.global_position = global_position + Vector3(0,1,0) + spawn_offset 
-	
-	#set projectile velocity (assumes projectile has a script with velocity property)
+	# Set projectile velocity
 	if projectile.has_method("set_velocity"):
 		projectile.set_velocity(direction * projectile_speed)
 	elif "velocity" in projectile:
 		projectile.velocity = direction * projectile_speed
+	
+	print("======================")
 	
 func _ready():
 	print("Player initialized with mouse control")

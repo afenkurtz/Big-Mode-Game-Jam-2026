@@ -7,7 +7,7 @@
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_lrhn5"]
 
-[node name="CharacterBody3D" type="CharacterBody3D" unique_id=1220649139]
+[node name="player" type="CharacterBody3D" unique_id=1220649139 groups=["player"]]
 script = ExtResource("1_g2els")
 projectile_scene = ExtResource("2_qhqgy")
 
