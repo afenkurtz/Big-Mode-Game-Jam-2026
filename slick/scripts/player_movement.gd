@@ -11,15 +11,27 @@ extends CharacterBody3D
 @export var stab_damage = 25.0
 @export var projectile_speed = 35.0
 @export var projectile_scene: PackedScene #assign in inspector
-
+@export var knockback_force = 15.0 # Adjustable value
 @export var debug_visuals = true 
 
+# Ammo system
+@export var max_ammo = 6.0
+@export var ammo_per_hit = .34 # Gain 1/3 of an ammo per hit (3 hits = 1 full ammo
+var current_ammo = 6.0
+
 #combo system
-@export var combo_window = 1.0 # time window to continue attack
-@export var combo_cooldown = 1.0 # Cooldown after completing a 3 hit combo
+@export var combo_window = .25 # time window to continue attack
+@export var combo_cooldown = 0.60 # Cooldown after completing a 3 hit combo
 var combo_count = 0 # current hit in combo 0,1,2
 var combo_timer = 0.0 # time since last attack
 var is_in_cooldown = false # Tracks if we're in post-combo cooldown
+
+# Health
+@export var max_health = 100.0
+@export var invulnerability_duration = 1.0
+var is_invulnerable = 1.0
+var invulnerability_timer = 1.0
+var current_health = max_health
 
 # Physics
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -28,6 +40,14 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 @onready var camera = $Camera3D
 
 func _physics_process(delta):
+	
+	# Update invlunerability timer
+	if invulnerability_timer > 0:
+			invulnerability_timer -= delta
+			if invulnerability_timer <= 0:
+				is_invulnerable = false
+				print ("Invulnerability ended")
+	
 	# update combo timer
 	if combo_timer > 0:
 		combo_timer -= delta
@@ -96,13 +116,21 @@ func _physics_process(delta):
 	
 	# Optional: backward burst (away from mouse)
 	if Input.is_action_just_pressed("fire_gun") and result:
-		var target_pos = result.position
-		direction = (global_position - target_pos).normalized()
-		direction.y = 0
-		
-		velocity.x += direction.x * burst_force
-		velocity.z += direction.z * burst_force
-		fire_projectile(direction * -1)
+		# Checks to see if we have ammo
+		if current_ammo >= 1.0:
+			#fire projectile
+			fire_projectile(direction)
+			
+			# Consumes ammo
+			current_ammo -= 1.0
+			print ("Fired projectile! Ammo: ", current_ammo, "/", max_ammo)
+			# Apply Backward Force
+			var backward_dir = -direction
+			velocity.x += backward_dir.x * burst_force
+			velocity.z += backward_dir.z * burst_force
+		else:
+			print("Out of ammo! Hit enemies to restore.")
+			# ToDO: Add audio feedback
 	
 	# Apply friction
 	if is_on_floor():
@@ -126,7 +154,7 @@ func perform_stab(direction: Vector3):
 	
 	var space_state = get_world_3d().direct_space_state
 	var stab_duration = 0.125  # How long the hitbox stays active
-	var hit_enemies = []  # Track which enemies we've already hit
+	var hit_objects = []  # Track which enemies we've already hit
 	
 	# Create a capsule shape for detection
 	var shape = CapsuleShape3D.new()
@@ -189,17 +217,21 @@ func perform_stab(direction: Vector3):
 		# Check each result
 		for result in results:
 			if result.collider.is_in_group("enemy"):
-				# Only hit each enemy once per stab
-			
-				if not hit_enemies.has(result.collider):
+				if not hit_objects.has(result.collider):
 					var to_enemy = (result.collider.global_position - global_position).normalized()
 					var dot = direction.dot(to_enemy)
+				# Only hit each enemy once per stab
 					
 					if dot > 0.5:
 						print("Hit enemy: ", result.collider.name)
 						if result.collider.has_method("take_damage"):
-							result.collider.take_damage(stab_damage)
-							hit_enemies.append(result.collider)
+							result.collider.take_damage(stab_damage, global_position)
+							hit_objects.append(result.collider)
+							
+							#restore ammo if at 5 or fewer shots
+							if current_ammo <= 5.0:
+								current_ammo = min(current_ammo + ammo_per_hit, max_ammo)
+								print ("Ammo: ", current_ammo, "/", max_ammo)
 							
 							# Turn capsule green on hit
 							if debug_capsule and is_instance_valid(debug_capsule):
@@ -208,17 +240,17 @@ func perform_stab(direction: Vector3):
 								hit_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 								debug_capsule.material_override = hit_material
 			elif result.collider.is_in_group("breakable"):
-				if not hit_enemies.has(result.collider):
+				if not hit_objects.has(result.collider):
 					print ("Hit breakable object: ", result.collider.name)
 					if result.collider.has_method("take_damage"):
 						result.collider.take_damage(stab_damage)
-						hit_enemies.append(result.collider)
+						hit_objects.append(result.collider)
 	
 	# Clean up debug visual
 	if debug_capsule and is_instance_valid(debug_capsule):
 		debug_capsule.queue_free()
 	
-	print("Stab finished. Hit ", hit_enemies.size(), " enemies")
+	print("Stab finished. Hit ", hit_objects.size(), " enemies")
 	print("==================")
 
 		
@@ -249,4 +281,65 @@ func fire_projectile(direction: Vector3):
 	print("======================")
 	
 func _ready():
-	print("Player initialized with mouse control")
+	current_health = max_health
+	current_ammo = max_ammo
+	print ("Player health: ", current_health)
+	print ("Player ammo: ", current_ammo)
+
+func take_damage(amount: float, attacker_position: Vector3 = Vector3.ZERO):
+	if is_invulnerable:
+		print("Player is invulnerable - no damage taken")
+		return
+	
+	current_health -= amount
+	print("Player took ", amount, " damage! Health: ", current_health)
+	
+	# Apply knockback if attacker position is provided
+	if attacker_position != Vector3.ZERO:
+		var knockback_dir = (global_position - attacker_position).normalized()
+		knockback_dir.y = 0
+		
+
+		velocity.x += knockback_dir.x * knockback_force
+		velocity.z += knockback_dir.z * knockback_force
+		print("Player knockback applied")
+	
+	is_invulnerable = true
+	invulnerability_timer = invulnerability_duration
+	print("Invulnerability active for ", invulnerability_duration, "seconds")
+	
+	#ToDo: add visual and audio hit feedback here
+	flash_invulnerable()
+	
+	if current_health <= 0:
+		die()
+		
+func flash_invulnerable():
+	var mesh = $MeshInstance3D
+	if mesh:
+		#flash between normal and transparent
+		var flash_count = 0
+		var max_flashes = int(invulnerability_duration * 4) # Flashes 4 times per second
+		while flash_count < max_flashes and is_invulnerable:
+			var material = StandardMaterial3D.new()
+			material.albedo_color = Color(1,1,1,0.3)
+			material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+			mesh.material_override = material
+			await get_tree().create_timer(0.125).timeout
+			
+			if is_instance_valid(mesh):
+				mesh.material_override = null
+				
+			await get_tree().create_timer(0.125).timeout
+			flash_count += 1
+			
+		if is_instance_valid(mesh):
+			mesh.material_override = null
+		
+		
+func die():
+	print("Player died!")
+	# ToDo: Game over logic
+	get_tree().reload_current_scene() # respawns whole room for now
+	
+	

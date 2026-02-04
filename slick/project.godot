@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Slick"
-run/main_scene="uid://dbna4owvradr3"
+run/main_scene="uid://c7lxj6f7qenoq"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 

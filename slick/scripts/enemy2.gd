@@ -11,6 +11,12 @@ extends CharacterBody3D
 @export var max_health = 100.0
 var current_health = max_health
 
+# Attack Parameters
+@export var attack_damage = 15.0
+@export var attack_cooldown = 1.5
+@export var knockback_strength = 30.0
+var attack_timer = 0.0
+
 #physics - gravity (uses godot defaults)
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
@@ -39,6 +45,10 @@ func _ready():
 	print("===================")
 		
 func _physics_process(delta):
+	# Update attack cooldown
+	if attack_timer > 0:
+		attack_timer -= delta
+
 	#apply gravity
 	if not is_on_floor():
 		velocity.y -= gravity * delta
@@ -63,8 +73,9 @@ func _physics_process(delta):
 			
 			
 		elif distance_to_player <= attack_range:
-		#this is where attack logic will go
-			pass
+			if attack_timer <= 0:
+				perform_melee_attack()
+				attack_timer = attack_cooldown
 			
 	if is_on_floor():
 		velocity.x *= friction_coefficient * ground_friction
@@ -85,15 +96,34 @@ func _physics_process(delta):
 	move_and_slide()
 
 		
-func take_damage(amount: float):
+func take_damage(amount: float, attacker_position: Vector3 = Vector3.ZERO):
 	current_health -= amount
 	print("Enemy took ", amount, " damage, Health: ", current_health)
+	
+	#Apply knockback if attacker position provided
+	if attacker_position != Vector3.ZERO:
+		var knockback_dir = (global_position - attacker_position).normalized()
+		knockback_dir.y = 0
+		
+		# Apply knockback force to velocity
+		velocity.x += knockback_dir.x * knockback_strength
+		velocity.z += knockback_dir.z * knockback_strength
 	
 	#visual feedback for hit
 	flash_red()
 		
 	if current_health <= 0:
 		die()
+	
+func perform_melee_attack():
+	print("Enemy melee attack")
+	
+	#Check if the player is still in range
+	if player !=null and global_position.distance_to(player.global_position) <= attack_range:
+		# Damage the player
+		if player.has_method("take_damage"):
+			player.take_damage(attack_damage, global_position)
+			print("Hit player for ", attack_damage, " damage!")
 	
 func flash_red():
 	var mesh = $MeshInstance3D
