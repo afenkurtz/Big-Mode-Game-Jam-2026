@@ -37,11 +37,11 @@ func _ready():
 func _physics_process(delta):
 	# Move projectile
 	global_position += velocity * delta
-	print("Projectile at: ", global_position)
+	#print("Projectile at: ", global_position)
 
 func set_velocity(vel: Vector3):
 	velocity = vel
-	print("Projectile velocity set to: ", velocity)
+	#print("Projectile velocity set to: ", velocity)
 
 func _on_body_entered(body):
 	print("=== PROJECTILE HIT ===")
@@ -59,7 +59,7 @@ func _on_body_entered(body):
 	if body.is_in_group("enemy"):
 		print("HIT ENEMY - Dealing damage!")
 		if body.has_method("take_damage"):
-			body.take_damage(damage)
+			body.take_damage(damage, global_position)
 	
 	elif body.is_in_group("breakable"):
 		print("Hit breakable!")

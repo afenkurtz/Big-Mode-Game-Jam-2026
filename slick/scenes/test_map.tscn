@@ -4,6 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://dkrsrbcsfrqlg" path="res://scenes/enemy.tscn" id="2_fn2sa"]
 [ext_resource type="PackedScene" uid="uid://br80gkapg0mwv" path="res://scenes/enemy2.tscn" id="3_57l66"]
 [ext_resource type="PackedScene" uid="uid://brq4t28s2xmh8" path="res://scenes/box.tscn" id="4_p21b5"]
+[ext_resource type="PackedScene" uid="uid://hsaqgp0dwgi8" path="res://scenes/pause_menu.tscn" id="5_bdpbv"]
+[ext_resource type="PackedScene" uid="uid://b5byinxclp7iq" path="res://scenes/bumper.tscn" id="6_ss0f2"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_agfs1"]
 
@@ -56,10 +58,10 @@ mesh = SubResource("BoxMesh_lrhn5")
 [node name="enemy" parent="." unique_id=782960690 groups=["enemy"] instance=ExtResource("2_fn2sa")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20.612194)
 
-[node name="player" parent="." unique_id=1220649139 instance=ExtResource("1_6ulkd")]
+[node name="enemy2" parent="." unique_id=231392483 groups=["enemy"] instance=ExtResource("3_57l66")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.639864, 0, 0)
 
-[node name="enemy2" parent="." unique_id=179912617 groups=["enemy"] instance=ExtResource("3_57l66")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.231667, 0, 0)
+[node name="player" parent="." unique_id=1220649139 instance=ExtResource("1_6ulkd")]
 
 [node name="wall" type="CSGBox3D" parent="." unique_id=1243583516]
 transform = Transform3D(50, 0, 0, 0, 50, 0, 0, 0, 50, 0, -25.275, 0)
@@ -71,3 +73,9 @@ operation = 2
 
 [node name="StaticBody3D" parent="." unique_id=1520577594 instance=ExtResource("4_p21b5")]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, -0.45003748, 10.110325)
+
+[node name="PauseMenu" parent="." unique_id=86275174 instance=ExtResource("5_bdpbv")]
+process_mode = 3
+
+[node name="Bumper" parent="." unique_id=96077077 instance=ExtResource("6_ss0f2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8.105831)

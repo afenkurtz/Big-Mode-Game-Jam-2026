@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://hsaqgp0dwgi8"]
+
+[ext_resource type="Script" uid="uid://cejpyrnso5p7h" path="res://scripts/pause_menu.gd" id="1_n87rw"]
+
+[node name="PauseMenu" type="CanvasLayer" unique_id=86275174]
+script = ExtResource("1_n87rw")
+
+[node name="Background" type="ColorRect" parent="." unique_id=2006994655]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.43137255)
+metadata/_edit_lock_ = true
+
+[node name="MenuContainer" type="Control" parent="." unique_id=359419888]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -100.0
+offset_right = 150.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ButtonContainer" type="VBoxContainer" parent="MenuContainer" unique_id=982596687]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="ResumeButton" type="Button" parent="MenuContainer/ButtonContainer" unique_id=1231656110]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+text = "Resume
+"
+
+[node name="RestartButton" type="Button" parent="MenuContainer/ButtonContainer" unique_id=2062192836]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+text = "Restart"
+
+[node name="QuitButton" type="Button" parent="MenuContainer/ButtonContainer" unique_id=1193101414]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+text = "Quit to Menu"
