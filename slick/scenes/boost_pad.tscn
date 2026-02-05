@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://dk17tmhejvomt"]
+
+[ext_resource type="Script" uid="uid://b1kcfrvyq1n65" path="res://scripts/boost_pad.gd" id="1_sndxi"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_a4728"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_sndxi"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a4728"]
+albedo_color = Color(0.69894594, 0.6301901, 0.24389231, 1)
+
+[node name="BoostPad" type="Area3D" unique_id=592173654]
+script = ExtResource("1_sndxi")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=113934990]
+transform = Transform3D(3, 0, 0, 0, 0.2, 0, 0, 0, 3, 0, 0, 0)
+shape = SubResource("BoxShape3D_a4728")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=298179467]
+transform = Transform3D(3, 0, 0, 0, 0.2, 0, 0, 0, 3, 0, 0, 0)
+mesh = SubResource("BoxMesh_sndxi")
+surface_material_override/0 = SubResource("StandardMaterial3D_a4728")

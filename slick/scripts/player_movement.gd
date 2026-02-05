@@ -29,9 +29,14 @@ var is_in_cooldown = false # Tracks if we're in post-combo cooldown
 # Health
 @export var max_health = 100.0
 @export var invulnerability_duration = 1.0
+
 var is_invulnerable = 1.0
 var invulnerability_timer = 1.0
 var current_health = max_health
+
+# Boost system
+var is_boosting = false
+var boost_decel_rate = 0.98 # closer to 1 = slower decay
 
 # Physics
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -142,12 +147,54 @@ func _physics_process(delta):
 	
 	# Cap maximum speed
 	var horizontal_velocity = Vector2(velocity.x, velocity.z)
-	if horizontal_velocity.length() > max_speed:
-		horizontal_velocity = horizontal_velocity.normalized() * max_speed
-		velocity.x = horizontal_velocity.x
-		velocity.z = horizontal_velocity.y
+	var current_speed = horizontal_velocity.length()
 	
+	if is_boosting:
+		#while boosting, decelerate
+		if current_speed > max_speed:
+			# apply boost decay
+			velocity.x *= boost_decel_rate
+			velocity.z *= boost_decel_rate
+		else:
+			#once at normal speed, disable boost
+			is_boosting = false
+			is_invulnerable = false
+			invulnerability_timer = 0.0
+	else:
+		#normal speed cap
+		if current_speed > max_speed:
+			horizontal_velocity = horizontal_velocity.normalized() * max_speed
+			velocity.x = horizontal_velocity.x
+			velocity.z = horizontal_velocity.y
+
 	move_and_slide()
+	
+	if is_boosting:
+		check_boost_collisions()
+		
+func check_boost_collisions():
+	# check collision during boost
+	for i in range(get_slide_collision_count()):
+		var collision = get_slide_collision(i)
+		var collider = collision.get_collider()
+		
+		if collider and collider.is_in_group("enemy"):
+			print("Boost collision into enemy")
+			
+			# Damage the enemy
+			if collider.has_method("take_damage"):
+				collider.take_damage(50.0, global_position)
+				print("dealt 50 boost damage to enemy")
+				
+		# Extra knockback for boost collision
+		if "velocity" in collider:
+			var knockback_dir = (collider.global_position - global_position).normalized()
+			knockback_dir.y = 0
+			
+			# Strong knockback
+			var boost_knockback = 30.0
+			collider.velocity.x += knockback_dir.x * boost_knockback
+			collider.velocity.z += knockback_dir.z * boost_knockback
 
 func perform_stab(direction: Vector3):
 	print("=== STAB DEBUG ===")
@@ -285,6 +332,28 @@ func _ready():
 	current_ammo = max_ammo
 	print ("Player health: ", current_health)
 	print ("Player ammo: ", current_ammo)
+	
+func heal(amount: float) -> float:
+	var old_health = current_health
+	current_health = min(current_health + amount, max_health)
+	var actual_heal = current_health - old_health
+	
+	return actual_heal
+	
+func apply_boost(direction: Vector3, speed:float):
+	print("Boost! Speed: ", speed)
+	#set velocity in boost direction
+	velocity.x = direction.x * speed
+	velocity.z = direction.z * speed
+	
+	#Enter boost state
+	is_boosting = true
+	
+	#activate invulnerability
+	is_invulnerable = true
+	invulnerability_timer = invulnerability_duration
+	flash_invulnerable()
+	
 
 func take_damage(amount: float, attacker_position: Vector3 = Vector3.ZERO):
 	if is_invulnerable:
