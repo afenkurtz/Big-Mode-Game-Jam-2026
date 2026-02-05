@@ -16,10 +16,6 @@
 [sub_resource type="Environment" id="Environment_agfs1"]
 background_mode = 2
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_rkhd4"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_lrhn5"]
-
 [node name="Node3D" type="Node3D" unique_id=1535340670]
 
 [node name="Floor" type="StaticBody3D" parent="." unique_id=839882316]
@@ -38,24 +34,6 @@ environment = SubResource("Environment_agfs1")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=457534606]
 transform = Transform3D(1, 0, 0, 0, 0.5644196, 0.82548803, 0, -0.82548803, 0.5644196, 0, 15.25749, 0)
-
-[node name="ramp1" type="StaticBody3D" parent="." unique_id=345485711]
-transform = Transform3D(3, 0, 0, 0, 2.3921516, -1.8104172, 0, 1.8104172, 2.3921516, -14.860468, -1.8097024, -1.3583801)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ramp1" unique_id=1422593146]
-shape = SubResource("BoxShape3D_rkhd4")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="ramp1" unique_id=1767077915]
-mesh = SubResource("BoxMesh_lrhn5")
-
-[node name="ramp2" type="StaticBody3D" parent="." unique_id=1199079249]
-transform = Transform3D(8.999999, 0, 0, 0, 8.120219, 3.8809783, 0, -3.8809783, 8.120219, -14.825205, -6.8099337, -12.978409)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ramp2" unique_id=1549552207]
-shape = SubResource("BoxShape3D_rkhd4")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="ramp2" unique_id=1622854231]
-mesh = SubResource("BoxMesh_lrhn5")
 
 [node name="enemy" parent="." unique_id=782960690 groups=["enemy"] instance=ExtResource("2_fn2sa")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20.612194)
@@ -86,7 +64,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8.105831)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.96217, 0, 0)
 
 [node name="BoostPad" parent="." unique_id=592173654 instance=ExtResource("7_kddbv")]
-transform = Transform3D(0.99991274, 0, 0.013211701, 0, 1, 0, -0.013211701, 0, 0.99991274, -14.333645, 0, 4.761942)
+transform = Transform3D(0.99991274, 0, 0.013211701, 0, 1, 0, -0.013211701, 0, 0.99991274, -14.333645, 0, 8.207246)
 
 [node name="HealthPickup" parent="." unique_id=889412715 instance=ExtResource("8_pw728")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 6.355141, 0, 0)

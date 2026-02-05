@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/Wall_NoSides_Snow.fbx-d23411b0a71c536d0ee5c2c
 
 [params]
 
-nodes/root_type=""
+nodes/root_type="Node3D"
 nodes/root_name=""
 nodes/root_script=null
 nodes/apply_root_scale=true

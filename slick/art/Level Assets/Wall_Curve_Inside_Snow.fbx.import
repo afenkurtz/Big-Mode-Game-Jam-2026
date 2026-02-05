@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/Wall_Curve_Inside_Snow.fbx-3e1f8c182c9cc702d2
 
 [params]
 
-nodes/root_type=""
+nodes/root_type="Node3D"
 nodes/root_name=""
 nodes/root_script=null
 nodes/apply_root_scale=true

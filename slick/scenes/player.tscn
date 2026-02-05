@@ -3,14 +3,13 @@
 [ext_resource type="Script" uid="uid://rrwpcep1a5em" path="res://scripts/player_movement.gd" id="1_g2els"]
 [ext_resource type="PackedScene" uid="uid://chpxoshrqmjlc" path="res://scenes/player_projectile.tscn" id="2_qhqgy"]
 [ext_resource type="Script" uid="uid://dqw58kga8rd6j" path="res://scripts/HUD.gd" id="3_qhqgy"]
+[ext_resource type="PackedScene" uid="uid://cjux1mk06chli" path="res://scenes/protag_sit_static.tscn" id="3_smehm"]
 [ext_resource type="Texture2D" uid="uid://dchce5t4vh75l" path="res://textures/UI/Untitled_Artwork.png" id="4_fjrip"]
 [ext_resource type="Texture2D" uid="uid://da0g8osn58slu" path="res://textures/UI/IMG_0084.png" id="5_tuyoq"]
 [ext_resource type="Texture2D" uid="uid://dn8faon50eb3a" path="res://textures/UI/IMG_0087.png" id="6_fjrip"]
 [ext_resource type="Texture2D" uid="uid://xqjyktdradco" path="res://textures/UI/IMG_0086.png" id="7_smehm"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rkhd4"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_lrhn5"]
 
 [node name="player" type="CharacterBody3D" unique_id=1220649139 groups=["player"]]
 script = ExtResource("1_g2els")
@@ -19,8 +18,8 @@ projectile_scene = ExtResource("2_qhqgy")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1008640707]
 shape = SubResource("CapsuleShape3D_rkhd4")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1111516751]
-mesh = SubResource("CapsuleMesh_lrhn5")
+[node name="Protag_Sit-Static" parent="." unique_id=1893001977 instance=ExtResource("3_smehm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.8134838, 0)
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1798798940]
 transform = Transform3D(1, 0, 0, 0, 0.49999997, 0.86602545, 0, -0.86602545, 0.49999997, 0, 15, 10)

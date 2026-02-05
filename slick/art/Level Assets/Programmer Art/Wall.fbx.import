@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/Wall.fbx-0e86b86fb460242196dd8129a8aaacbf.scn
 
 [params]
 
-nodes/root_type=""
+nodes/root_type="Node3D"
 nodes/root_name=""
 nodes/root_script=null
 nodes/apply_root_scale=true

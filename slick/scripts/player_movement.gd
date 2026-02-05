@@ -1,10 +1,12 @@
 extends CharacterBody3D
+@onready var character_model = $"Protag_Sit-Static" #Change this if the name of the model changes
 
 # Movement parameters
 @export var burst_force = 20.0
 @export var friction_coefficient = .98
 @export var ground_friction = 1
 @export var max_speed = 30.0
+@export var rotation_speed = 10.0
 
 #attack parameters
 @export var stab_range = 6.0
@@ -87,6 +89,8 @@ func _physics_process(delta):
 		var target_pos = result.position
 		direction = (target_pos - global_position).normalized()
 		direction.y=0
+		# Rotate character model to face cursor
+		rotate_character_to_cursor(direction)
 	
 	# Handle burst toward mouse
 	if Input.is_action_just_pressed("move_forward") and result:
@@ -166,6 +170,7 @@ func _physics_process(delta):
 			horizontal_velocity = horizontal_velocity.normalized() * max_speed
 			velocity.x = horizontal_velocity.x
 			velocity.z = horizontal_velocity.y
+			
 
 	move_and_slide()
 	
@@ -405,6 +410,12 @@ func flash_invulnerable():
 		if is_instance_valid(mesh):
 			mesh.material_override = null
 		
+func rotate_character_to_cursor(direction: Vector3):
+	if character_model and direction.length() > 0.1:
+		# Calculates target rotation from direction
+		var target_rotation = atan2(direction.x, direction.z)
+		# Smoothes the rotation with lerp
+		character_model.rotation.y = lerp_angle(character_model.rotation.y, target_rotation, rotation_speed * get_process_delta_time())
 		
 func die():
 	print("Player died!")

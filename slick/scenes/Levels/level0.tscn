@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://cp6kbromj08tu"]
+
+[ext_resource type="Texture2D" uid="uid://dh3kxbjhl72y3" path="res://textures/Ice/Ice004_4K_Color.jpg" id="1_7ffvc"]
+[ext_resource type="Texture2D" uid="uid://cjned0juw1ccy" path="res://textures/Ice/Ice004_4K_Displacement.jpg" id="2_1s8r5"]
+[ext_resource type="Texture2D" uid="uid://bm2bp1qn0loa0" path="res://textures/Ice/Ice004_4K_NormalGL.jpg" id="3_nq4kd"]
+[ext_resource type="Texture2D" uid="uid://c2gs504pqwcwb" path="res://textures/Ice/Ice004_4K_Roughness.jpg" id="4_qrpiy"]
+[ext_resource type="PackedScene" uid="uid://uwu7xvg2irwm" path="res://scenes/wall_standard.tscn" id="5_qrpiy"]
+[ext_resource type="PackedScene" uid="uid://cvtx8o5r4t415" path="res://scenes/wall_curve_inside.tscn" id="6_2mh6w"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_vcnxx"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p52pv"]
+albedo_texture = ExtResource("1_7ffvc")
+roughness_texture = ExtResource("4_qrpiy")
+normal_enabled = true
+normal_texture = ExtResource("3_nq4kd")
+heightmap_enabled = true
+heightmap_texture = ExtResource("2_1s8r5")
+uv1_scale = Vector3(0.1, 0.1, 0.1)
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_2mh6w"]
+
+[node name="Level0" type="Node3D" unique_id=231052579]
+
+[node name="Floor" type="StaticBody3D" parent="." unique_id=550775318]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor" unique_id=1180702783]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+mesh = SubResource("PlaneMesh_vcnxx")
+surface_material_override/0 = SubResource("StandardMaterial3D_p52pv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=385221627]
+shape = SubResource("WorldBoundaryShape3D_2mh6w")
+
+[node name="walls" type="Node3D" parent="." unique_id=2121930615]
+
+[node name="Wall_Standard" parent="walls" unique_id=736477633 instance=ExtResource("5_qrpiy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6999999, 0, -11)
+
+[node name="Wall_Standard2" parent="walls" unique_id=1449358421 instance=ExtResource("5_qrpiy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6000003, 0, -11)
+
+[node name="Wall_Standard4" parent="walls" unique_id=720059687 instance=ExtResource("5_qrpiy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.9, 0, -11)
+
+[node name="Wall_Standard3" parent="walls" unique_id=2096703810 instance=ExtResource("5_qrpiy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -11)
+
+[node name="Wall_Curve_Inside" parent="walls" unique_id=877472073 instance=ExtResource("6_2mh6w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.200001, 0, -7.7)
+
+[node name="Wall_Curve_Inside2" parent="walls" unique_id=1416936903 instance=ExtResource("6_2mh6w")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -8.3, 0, -7.7000003)

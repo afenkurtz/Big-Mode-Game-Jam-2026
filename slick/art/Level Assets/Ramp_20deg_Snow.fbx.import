@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/Ramp_20deg_Snow.fbx-6d327bafbb58bf90c6db340de
 
 [params]
 
-nodes/root_type=""
+nodes/root_type="Node3D"
 nodes/root_name=""
 nodes/root_script=null
 nodes/apply_root_scale=true

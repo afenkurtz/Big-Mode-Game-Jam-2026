@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/Tree_Tall_1_NoSnow.fbx-3f34e9631fe8b091a0bda6
 
 [params]
 
-nodes/root_type=""
+nodes/root_type="Node3D"
 nodes/root_name=""
 nodes/root_script=null
 nodes/apply_root_scale=true

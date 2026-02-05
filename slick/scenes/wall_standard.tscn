@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://uwu7xvg2irwm"]
+
+[ext_resource type="PackedScene" uid="uid://cm5mlggjlmf8i" path="res://art/Level Assets/Wall_Standard_Snow.fbx" id="1_2hqic"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wufwm"]
+size = Vector3(3.344925, 6.6603546, 3.2863922)
+
+[node name="Wall_Standard" type="StaticBody3D" unique_id=736477633]
+
+[node name="Wall_Standard_Snow" parent="." unique_id=759236646 instance=ExtResource("1_2hqic")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=513970280]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0012135506, 3.3346786, 0.010373116)
+shape = SubResource("BoxShape3D_wufwm")

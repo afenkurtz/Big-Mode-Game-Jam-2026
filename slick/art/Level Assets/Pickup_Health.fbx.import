@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/Pickup_Health.fbx-50c3d0fe79c3adfda9645eb4667
 
 [params]
 
-nodes/root_type=""
+nodes/root_type="Node3D"
 nodes/root_name=""
 nodes/root_script=null
 nodes/apply_root_scale=true

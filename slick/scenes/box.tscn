@@ -2,8 +2,14 @@
 
 [ext_resource type="Script" uid="uid://bhj11ijm8jp7k" path="res://scripts/box.gd" id="1_3inec"]
 [ext_resource type="PackedScene" uid="uid://ce8rq2dshm1ic" path="res://scenes/health_pickup.tscn" id="2_ks2v0"]
+[ext_resource type="Texture2D" uid="uid://br25sm4mg0dxi" path="res://textures/box/IMG_0078.jpg" id="3_c2ln5"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_3inec"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_telwu"]
+albedo_texture = ExtResource("3_c2ln5")
+uv1_offset = Vector3(0.5, 0.5, 0.5)
+uv1_triplanar = true
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ks2v0"]
 
@@ -14,6 +20,7 @@ health_pickup_scene = ExtResource("2_ks2v0")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=306075338]
 mesh = SubResource("BoxMesh_3inec")
+surface_material_override/0 = SubResource("StandardMaterial3D_telwu")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1268946595]
 shape = SubResource("BoxShape3D_ks2v0")
