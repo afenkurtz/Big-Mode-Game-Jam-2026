@@ -17,6 +17,11 @@ var current_health = max_health
 @export var knockback_strength = 30.0
 var attack_timer = 0.0
 
+# Stun system
+@export var stun_duration = 0.8  # How long enemies are stunned
+var is_stunned = false
+var stun_timer = 0.0
+
 #physics - gravity (uses godot defaults)
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
@@ -45,6 +50,16 @@ func _ready():
 	print("===================")
 		
 func _physics_process(delta):
+	# update stun timer
+	if stun_timer > 0:
+		stun_timer -= delta
+		if stun_timer <= 0:
+			is_stunned = false
+			print("Stun ended")
+			var mesh = $MeshInstance3D
+			if mesh:
+				mesh.material_override = null
+	
 	# Update attack cooldown
 	if attack_timer > 0:
 		attack_timer -= delta
@@ -52,6 +67,25 @@ func _physics_process(delta):
 	#apply gravity
 	if not is_on_floor():
 		velocity.y -= gravity * delta
+		
+# Try to find player
+	if player == null:
+		player = get_tree().get_first_node_in_group("player")
+		if player == null:
+			move_and_slide()
+			return
+	
+	# Skip AI if stunned
+	if is_stunned:
+		if is_on_floor():
+			velocity.x *= friction_coefficient * ground_friction
+			velocity.z *= friction_coefficient * ground_friction
+		else:
+			velocity.x *= friction_coefficient
+			velocity.z *= friction_coefficient
+		
+		move_and_slide()
+		return
 	
 	#checks if player is in range, if player is in range, chase player
 	if player != null:
@@ -108,12 +142,60 @@ func take_damage(amount: float, attacker_position: Vector3 = Vector3.ZERO):
 		# Apply knockback force to velocity
 		velocity.x += knockback_dir.x * knockback_strength
 		velocity.z += knockback_dir.z * knockback_strength
+		
+		# Apply stun
+		apply_stun()
 	
 	#visual feedback for hit
 	flash_red()
 		
 	if current_health <= 0:
 		die()
+	
+func apply_stun():
+	is_stunned = true
+	stun_timer = stun_duration
+	
+	# Visual feedback
+	var mesh = $MeshInstance3D
+	if mesh:
+		var stun_material = StandardMaterial3D.new()
+		stun_material.albedo_color = Color(0.5, 0.5, 0.5)
+		mesh.material_override = stun_material
+	
+	# Spawn stun stars
+	spawn_stun_stars()
+
+func spawn_stun_stars():
+	# Create circling stars above enemy
+	for i in range(3):
+		var star = MeshInstance3D.new()
+		add_child(star)
+		
+		var star_mesh = SphereMesh.new()
+		star_mesh.radius = 0.2
+		star.mesh = star_mesh
+		
+		var material = StandardMaterial3D.new()
+		material.albedo_color = Color(1, 1, 0)
+		material.emission_enabled = true
+		material.emission = Color(1, 1, 0)
+		star.material_override = material
+		
+		# Position above head
+		star.position = Vector3(0, 2, 0)
+		
+		# Animate circling
+		var tween = create_tween()
+		tween.set_loops(int(stun_duration * 2))
+		tween.tween_property(star, "rotation:y", TAU, 0.5)
+		
+		# Cleanup
+		get_tree().create_timer(stun_duration).timeout.connect(
+			func(): 
+				if is_instance_valid(star):
+					star.queue_free()
+		)
 	
 func perform_melee_attack():
 	print("Enemy melee attack")

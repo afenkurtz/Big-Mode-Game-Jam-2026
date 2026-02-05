@@ -3,6 +3,8 @@ extends StaticBody3D
 @export var max_health = 50.0
 @export var drop_debris = true
 @export var debris_pieces = 5
+@export var drop_health_pickup = true
+@export var health_pickup_scene: PackedScene
 
 var current_health = max_health
 
@@ -42,9 +44,20 @@ func break_apart():
 		spawn_debris()
 	
 	# Optional: spawn loot, play sound, particle effects here
+	if drop_health_pickup and health_pickup_scene:
+		spawn_health_pickup()
 	
 	# Remove the object
 	queue_free()
+
+func spawn_health_pickup():
+	var health_pickup = health_pickup_scene.instantiate()
+	get_parent().add_child(health_pickup)
+	
+	# Position at the broken box location + y
+	health_pickup.global_position = global_position + Vector3(0,1,0)
+	
+	print("Health Pickup Spawned")
 
 func spawn_debris():
 	# Create small debris pieces that fly outward
