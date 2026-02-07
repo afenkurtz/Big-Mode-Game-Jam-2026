@@ -1,5 +1,7 @@
 extends CharacterBody3D
-@onready var character_model = $"Protag_Sit-Static" #Change this if the name of the model changes
+# @onready var character_model = $"Protag_Sit-Static" #Change this if the name of the model changes
+@onready var pivot = $Pivot
+@onready var animation_tree = $AnimationTree
 
 # Movement parameters
 @export var burst_force = 20.0
@@ -107,6 +109,8 @@ func _physics_process(delta):
 		if can_attack:
 			#Perform stab
 			perform_stab(direction)
+			#Perform stab anim
+			perform_stab_anim(combo_count+1)
 			
 			#apply movement in the same direction
 			velocity.x += direction.x * burst_force
@@ -117,6 +121,8 @@ func _physics_process(delta):
 			print("Stab #", combo_count, " of 3")
 			
 			if combo_count >= 3:
+				# reset anim
+				animation_tree.set("parameters/Transition/transition_request", "moving")
 				print("Combo complete! Cooldown starting...")
 				is_in_cooldown = true
 				combo_timer = combo_cooldown # Start cooldown timer
@@ -146,7 +152,7 @@ func _physics_process(delta):
 			velocity.z += backward_dir.z * burst_force
 		else:
 			print("Out of ammo! Hit enemies to restore.")
-			# ToDO: Add audio feedback
+			# TODO: Add audio feedback
 	
 	# Apply friction
 	if is_on_floor():
@@ -333,10 +339,29 @@ func perform_stab(direction: Vector3):
 	print("Stab finished. Hit ", hit_objects.size(), " enemies")
 	print("==================")
 
+func perform_stab_anim(combo_num: int):
+	#TODO: hide melee on back, show melee in hand
+	
+	# theres a better way to do this 
+	# i should really be using a different loop type...
+	# oh well
+	if combo_num == 3:
+		# Play child animation connected to the corresponding stab port (1-3).
+		animation_tree.set("parameters/Transition/transition_request", "stab_3")
+	elif combo_num == 2:
+		animation_tree.set("parameters/Transition/transition_request", "stab_2")
+	else:
+		animation_tree.set("parameters/Transition/transition_request", "stab_1")
+
 		
 func fire_projectile(direction: Vector3):
 	print("=== FIRING PROJECTILE ===")
 	print("Direction: ", direction)
+	
+	#TODO: show, then hide gun
+	
+	# Play child animation connected to "shoot+" port.
+	animation_tree.set("parameters/Transition/transition_request", "shoot")
 	
 	if projectile_scene == null:
 		print("Warning: No projectile scene assigned!")
@@ -443,15 +468,14 @@ func flash_invulnerable():
 			mesh.material_override = null
 		
 func rotate_character_to_cursor(direction: Vector3):
-	if character_model and direction.length() > 0.1:
+	if pivot and direction.length() > 0.1:
 		# Calculates target rotation from direction
 		var target_rotation = atan2(direction.x, direction.z)
 		# Smoothes the rotation with lerp
-		character_model.rotation.y = lerp_angle(character_model.rotation.y, target_rotation, rotation_speed * get_process_delta_time())
+		pivot.rotation.y = lerp_angle(pivot.rotation.y, target_rotation, rotation_speed * get_process_delta_time())
 		
 func die():
 	print("Player died!")
 	# ToDo: Game over logic
 	get_tree().reload_current_scene() # respawns whole room for now
-	
 	
