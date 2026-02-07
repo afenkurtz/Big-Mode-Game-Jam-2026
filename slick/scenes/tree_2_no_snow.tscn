@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://bdv63m6mw6i6y"]
+
+[ext_resource type="PackedScene" uid="uid://11a58u551s6w" path="res://art/Level Assets/Tree_Tall_2_NoSnow.fbx" id="1_ffmxa"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_6prb3"]
+height = 4.0
+radius = 0.3569336
+
+[node name="Tree2_NoSnow" type="StaticBody3D" unique_id=357301556]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1083207543]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+shape = SubResource("CylinderShape3D_6prb3")
+
+[node name="Tree_Tall_2_NoSnow" parent="." unique_id=674889126 instance=ExtResource("1_ffmxa")]
