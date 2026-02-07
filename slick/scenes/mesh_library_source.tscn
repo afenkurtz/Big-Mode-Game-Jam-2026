@@ -1,0 +1,79 @@
+[gd_scene format=3 uid="uid://btrykwdk5sk4v"]
+
+[ext_resource type="PackedScene" uid="uid://87uwcwfbwtgl" path="res://scenes/wall.tscn" id="1_xwr6l"]
+[ext_resource type="PackedScene" uid="uid://cvtx8o5r4t415" path="res://scenes/wall_curve_inside.tscn" id="2_s4g1a"]
+[ext_resource type="PackedScene" uid="uid://cjuxipmmu8x88" path="res://scenes/wall_curve_outside.tscn" id="3_4nxbo"]
+[ext_resource type="PackedScene" uid="uid://cf366idsjis8v" path="res://scenes/wall_no_sides.tscn" id="4_br0w6"]
+[ext_resource type="PackedScene" uid="uid://uwu7xvg2irwm" path="res://scenes/wall_standard.tscn" id="5_18r71"]
+[ext_resource type="PackedScene" uid="uid://c3vvah7v716ce" path="res://scenes/ramp_20_deg.tscn" id="6_5v6k5"]
+[ext_resource type="PackedScene" uid="uid://bvmsbohnqh8" path="res://scenes/ramp_30_deg.tscn" id="7_mhtpu"]
+[ext_resource type="PackedScene" uid="uid://ce8rq2dshm1ic" path="res://scenes/health_pickup.tscn" id="8_lkng5"]
+[ext_resource type="PackedScene" uid="uid://pgxkjw41ryql" path="res://scenes/gate.tscn" id="9_b8uh4"]
+[ext_resource type="PackedScene" uid="uid://kl5o7g2s1a4k" path="res://scenes/button.tscn" id="10_p0kai"]
+[ext_resource type="PackedScene" uid="uid://b5byinxclp7iq" path="res://scenes/bumper.tscn" id="11_tb30f"]
+[ext_resource type="PackedScene" uid="uid://dciitbfawyc57" path="res://scenes/bridge_rope.tscn" id="12_f658m"]
+[ext_resource type="PackedScene" uid="uid://b20bx3ci1itn1" path="res://scenes/bridge_logs.tscn" id="13_oq7qm"]
+[ext_resource type="PackedScene" uid="uid://dk17tmhejvomt" path="res://scenes/boost_pad.tscn" id="14_g7wx4"]
+[ext_resource type="PackedScene" uid="uid://brq4t28s2xmh8" path="res://scenes/box.tscn" id="15_fndjw"]
+[ext_resource type="PackedScene" uid="uid://wjntdoke7t0y" path="res://scenes/tree_1_no_snow.tscn" id="16_gyimy"]
+[ext_resource type="PackedScene" uid="uid://bj3ye1vw0hrit" path="res://scenes/tree_1_snow.tscn" id="17_yalts"]
+[ext_resource type="PackedScene" uid="uid://bdv63m6mw6i6y" path="res://scenes/tree_2_no_snow.tscn" id="18_xrs2y"]
+[ext_resource type="PackedScene" uid="uid://cn66cv0vdiehw" path="res://scenes/tree_2_snow.tscn" id="19_j36yt"]
+
+[node name="Node3D" type="Node3D" unique_id=2006586560]
+
+[node name="Wall" parent="." unique_id=2098975378 instance=ExtResource("1_xwr6l")]
+
+[node name="Wall_Curve_Inside" parent="." unique_id=877472073 instance=ExtResource("2_s4g1a")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 1.8799999, 0, 0)
+
+[node name="Wall_Curve_Outside" parent="." unique_id=499652783 instance=ExtResource("3_4nxbo")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 4, 0, 0)
+
+[node name="Wall_NoSides" parent="." unique_id=1873473387 instance=ExtResource("4_br0w6")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 6, 0, 0)
+
+[node name="Wall_Standard" parent="." unique_id=736477633 instance=ExtResource("5_18r71")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -2, 0, 0)
+
+[node name="Ramp_20deg" parent="." unique_id=995810527 instance=ExtResource("6_5v6k5")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 8.1, 0, 0)
+
+[node name="Ramp_30degs" parent="." unique_id=1683262771 instance=ExtResource("7_mhtpu")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 10.5, 0, 0)
+
+[node name="HealthPickup" parent="." unique_id=889412715 instance=ExtResource("8_lkng5")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -3.8, 0, 0)
+
+[node name="Gate" parent="." unique_id=1935315186 instance=ExtResource("9_b8uh4")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -8.1, 0, 0)
+
+[node name="Button" parent="." unique_id=491910288 instance=ExtResource("10_p0kai")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -9.8, 0, 0)
+
+[node name="Bumper" parent="." unique_id=96077077 instance=ExtResource("11_tb30f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.900001, 0, 0)
+
+[node name="Bridge_Rope" parent="." unique_id=1934659966 instance=ExtResource("12_f658m")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -14.7, 0, 0)
+
+[node name="Bridge_Logs" parent="." unique_id=666890718 instance=ExtResource("13_oq7qm")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -17.800001, 0, 0)
+
+[node name="BoostPad" parent="." unique_id=592173654 instance=ExtResource("14_g7wx4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.6, 0, 0)
+
+[node name="Box" parent="." unique_id=1520577594 instance=ExtResource("15_fndjw")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -21, 0.7, 0)
+
+[node name="Tree1_NoSnow" parent="." unique_id=230409267 instance=ExtResource("16_gyimy")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 16, 0, 0)
+
+[node name="Tree1_Snow" parent="." unique_id=1920278346 instance=ExtResource("17_yalts")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 19, 0, 0)
+
+[node name="Tree2_NoSnow" parent="." unique_id=357301556 instance=ExtResource("18_xrs2y")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 22, 0, 0)
+
+[node name="Tree2_Snow" parent="." unique_id=442358463 instance=ExtResource("19_j36yt")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 13, 0, 0)
