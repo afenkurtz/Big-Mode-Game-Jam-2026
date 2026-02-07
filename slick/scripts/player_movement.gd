@@ -1,7 +1,8 @@
 extends CharacterBody3D
 # @onready var character_model = $"Protag_Sit-Static" #Change this if the name of the model changes
 @onready var pivot = $Pivot
-@onready var animation_tree = $AnimationTree
+
+var animation_tree: AnimationTree
 
 # Movement parameters
 @export var burst_force = 20.0
@@ -340,28 +341,24 @@ func perform_stab(direction: Vector3):
 	print("==================")
 
 func perform_stab_anim(combo_num: int):
-	#TODO: hide melee on back, show melee in hand
-	
 	# theres a better way to do this 
 	# i should really be using a different loop type...
 	# oh well
 	if combo_num == 3:
-		# Play child animation connected to the corresponding stab port (1-3).
-		animation_tree.set("parameters/Transition/transition_request", "stab_3")
+		# Set animation tree condition is_melee_3 to true
+		play_animation("sit_stab_3")
 	elif combo_num == 2:
-		animation_tree.set("parameters/Transition/transition_request", "stab_2")
+		play_animation("sit_stab_2")
 	else:
-		animation_tree.set("parameters/Transition/transition_request", "stab_1")
+		play_animation("sit_stab_1")
+
 
 		
 func fire_projectile(direction: Vector3):
 	print("=== FIRING PROJECTILE ===")
 	print("Direction: ", direction)
 	
-	#TODO: show, then hide gun
-	
-	# Play child animation connected to "shoot+" port.
-	animation_tree.set("parameters/Transition/transition_request", "shoot")
+	play_animation("sit_shoot")
 	
 	if projectile_scene == null:
 		print("Warning: No projectile scene assigned!")
@@ -394,6 +391,16 @@ func _ready():
 	wall_min_slide_angle = 0.0
 	floor_stop_on_slope = false
 	floor_block_on_wall = false
+	
+	animation_tree = $AnimationTree
+	animation_tree.connect("animation_finished", _on_animation_finished)
+	
+func _on_animation_finished(anim_name: String):
+	if anim_name in ["sit_shoot", "sit_stab_1", "sit_stab_2", "sit_stab_3"]:
+		animation_tree["parameters/playback"].travel("sit_idle")
+		
+func play_animation(anim_name: String):
+	animation_tree["parameters/playback"].travel(anim_name)
 	
 func heal(amount: float) -> float:
 	var old_health = current_health
