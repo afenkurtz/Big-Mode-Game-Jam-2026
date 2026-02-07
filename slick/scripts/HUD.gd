@@ -2,7 +2,8 @@ extends CanvasLayer
 
 @onready var ammo_label = $HUDContainer/AmmoLabel
 @onready var health_bar = $HUDContainer/HealthBar
-@onready var cooldown_bar = $HUDContainer/CooldownBar  # NEW
+@onready var cooldown_bar = $HUDContainer/CooldownBar
+@onready var coin_label = $HUDContainer/CoinLabel
 var player = null
 var last_ammo = 0.0
 var last_health = 0.0
@@ -33,6 +34,7 @@ func _process(delta):
 		
 		# Always update cooldown (it changes every frame)
 		update_cooldown()
+		update_coins()
 
 func update_hud():
 	update_ammo()
@@ -41,6 +43,7 @@ func update_hud():
 func update_ammo():
 	if player and ammo_label:
 		ammo_label.text = "Ammo: " + str(int(player.current_ammo)) + "/" + str(int(player.max_ammo))
+		
 
 func update_health():
 	if player and health_bar:
@@ -54,6 +57,11 @@ func update_health():
 			player.current_health,
 			0.3
 		).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		
+func update_coins(): 
+	print("update coins called")
+	if player and coin_label:
+		coin_label.text = "🪙 X " + str(player.coins_collected)
 
 func update_cooldown():
 	if player and cooldown_bar:

@@ -74,11 +74,11 @@ projectile_scene = ExtResource("2_qhqgy")
 [node name="Protag_Main" parent="Pivot" unique_id=1766754747 instance=ExtResource("3_y4r1p")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, -0.8892286, -0.04067135)
 
-[node name="Skeleton3D" parent="Pivot/Protag_Main/Armature" parent_id_path=PackedInt32Array(1766754747, 1587764269) index="0" unique_id=1712660770]
+[node name="Skeleton3D" parent="Pivot/Protag_Main/Armature" parent_id_path=PackedInt32Array(1766754747, 219042000) index="0" unique_id=29145750]
 bones/0/position = Vector3(-1.1589792e-08, 0.080863714, 0.0500772)
-bones/0/rotation = Quaternion(-0.118118115, 6.3306764e-19, -4.5258348e-18, 0.9929996)
-bones/1/rotation = Quaternion(0.23030412, 1.1251866e-19, 1.2164393e-17, 0.9731188)
-bones/2/rotation = Quaternion(-0.073105045, 1.5452308e-19, -3.1232078e-20, 0.99732435)
+bones/0/rotation = Quaternion(-0.118117735, 0.0003077623, -0.0025873054, 0.9929962)
+bones/1/rotation = Quaternion(0.23030403, 3.863356e-06, -0.00087823445, 0.9731184)
+bones/2/rotation = Quaternion(-0.07310045, -0.0017323458, -0.0110998, 0.9972614)
 bones/3/position = Vector3(0.54708755, 0.6917355, -0.025935588)
 bones/3/rotation = Quaternion(0.37754318, -0.1622798, -0.81860936, 0.40125465)
 bones/4/rotation = Quaternion(0.505607, 0.13328657, 0.054676462, 0.85065085)
@@ -92,16 +92,16 @@ bones/10/rotation = Quaternion(0.11746692, -0.06805869, -0.13625379, 0.981328)
 bones/11/rotation = Quaternion(0.11691814, 0.08899437, 0.16980992, 0.97446126)
 bones/12/rotation = Quaternion(0.1088657, 0.08249449, 0.31753802, 0.9383563)
 bones/13/position = Vector3(0.21609454, 0.029707551, 0.14022791)
-bones/13/rotation = Quaternion(0.09885354, 0.9043524, 0.41507655, -0.009282686)
+bones/13/rotation = Quaternion(0.09619313, 0.90479046, 0.41473976, -0.0096100755)
 bones/14/rotation = Quaternion(-0.6682492, -8.6551616e-08, -2.3881585e-06, 0.74393755)
 bones/15/rotation = Quaternion(0.14007697, -1.446871e-07, -9.3089557e-07, 0.9901407)
 bones/16/position = Vector3(-0.21609454, 0.029707551, 0.14022791)
-bones/16/rotation = Quaternion(-0.12960944, 0.9016594, 0.4124878, 0.008097084)
+bones/16/rotation = Quaternion(-0.13228317, 0.9011319, 0.4127974, 0.0077870693)
 bones/17/rotation = Quaternion(-0.6669024, 8.552184e-08, 2.384732e-06, 0.7451451)
 bones/18/rotation = Quaternion(0.14007705, 1.539008e-07, 9.2088135e-07, 0.9901407)
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="Pivot/Protag_Main/Armature/Skeleton3D" index="0" unique_id=710509444]
-transform = Transform3D(-0.1461376, 0.5791561, 0.80201113, 0.9139809, -0.23116302, 0.33346963, 0.37852636, 0.7817557, -0.49555597, -0.56622875, 0.8844065, 0.6884786)
+transform = Transform3D(-0.13976584, 0.57753134, 0.80431515, 0.914977, -0.23519266, 0.3278734, 0.3785262, 0.78175575, -0.495556, -0.5622119, 0.88834214, 0.6884786)
 bone_name = "wrist.r"
 bone_idx = 10
 
@@ -110,14 +110,14 @@ transform = Transform3D(-0.73726404, 0.66412205, 0.12403202, 0.3770519, 0.252134
 visible = false
 
 [node name="BoneAttachment3D2" type="BoneAttachment3D" parent="Pivot/Protag_Main/Armature/Skeleton3D" index="2" unique_id=741346567]
-transform = Transform3D(-0.1461376, 0.5791561, 0.80201113, 0.9139809, -0.23116302, 0.33346963, 0.37852636, 0.7817557, -0.49555597, -0.56622875, 0.8844065, 0.6884786)
+transform = Transform3D(-0.13976584, 0.57753134, 0.80431515, 0.914977, -0.23519266, 0.3278734, 0.3785262, 0.78175575, -0.495556, -0.5622119, 0.88834214, 0.6884786)
 bone_name = "wrist.r"
 bone_idx = 10
 
 [node name="Protag_Main_Melee" parent="Pivot/Protag_Main/Armature/Skeleton3D/BoneAttachment3D2" unique_id=1946502386 instance=ExtResource("4_d2wvv")]
 transform = Transform3D(0.13070288, -0.2500041, -0.95938385, -0.9206617, 0.32841945, -0.21101013, 0.36783308, 0.91084653, -0.18724403, -0.18103418, 0.38119137, 0.38386557)
 
-[node name="AnimationPlayer" parent="Pivot/Protag_Main" index="1" unique_id=1056431875]
+[node name="AnimationPlayer" parent="Pivot/Protag_Main" index="1" unique_id=1093979272]
 autoplay = &"sit_idle"
 
 [node name="Protag_Main_Melee_Back" parent="Pivot" unique_id=311436074 instance=ExtResource("4_d2wvv")]
@@ -206,6 +206,7 @@ texture_under = ExtResource("6_fjrip")
 texture_progress = ExtResource("7_smehm")
 
 [node name="Label" type="Label" parent="HUD/HUDContainer" unique_id=2129272592]
+visible = false
 layout_mode = 0
 offset_left = 5.0
 offset_top = 581.0
@@ -217,6 +218,15 @@ theme_override_font_sizes/font_size = 12
 text = "Mouse: Points in direction of cursor
 Left Click: Stab toward mouse
 Right Click: Fire gun toward mouse"
+
+[node name="CoinLabel" type="Label" parent="HUD/HUDContainer" unique_id=595185330]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 24
+text = "Coins X 0"
 
 [editable path="Pivot/Protag_Main"]
 [editable path="Pivot/Protag_Main/Armature/Skeleton3D/BoneAttachment3D/Protag_Main_Gun"]
