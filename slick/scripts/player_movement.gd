@@ -35,6 +35,10 @@ var is_in_cooldown = false # Tracks if we're in post-combo cooldown
 @export var max_health = 100.0
 @export var invulnerability_duration = 1.0
 
+#Coin system
+var coins_collected = 0
+
+
 var is_invulnerable = 1.0
 var invulnerability_timer = 1.0
 var current_health = max_health
@@ -385,6 +389,7 @@ func fire_projectile(direction: Vector3):
 func _ready():
 	current_health = max_health
 	current_ammo = max_ammo
+	coins_collected = 0
 	print ("Player health: ", current_health)
 	print ("Player ammo: ", current_ammo)
 	
@@ -394,6 +399,11 @@ func _ready():
 	
 	animation_tree = $AnimationTree
 	animation_tree.connect("animation_finished", _on_animation_finished)
+	
+func add_coins(amount: int):
+	coins_collected += amount
+	print(coins_collected)
+	
 	
 func _on_animation_finished(anim_name: String):
 	if anim_name in ["sit_shoot", "sit_stab_1", "sit_stab_2", "sit_stab_3"]:
@@ -411,9 +421,14 @@ func heal(amount: float) -> float:
 	
 func apply_boost(direction: Vector3, speed:float):
 	print("Boost! Speed: ", speed)
+	
+	#preserve y velocity
+	var current_y_velocity = velocity.y
+	
 	#set velocity in boost direction
 	velocity.x = direction.x * speed
 	velocity.z = direction.z * speed
+	velocity.y = current_y_velocity
 	
 	#Enter boost state
 	is_boosting = true
@@ -453,7 +468,7 @@ func take_damage(amount: float, attacker_position: Vector3 = Vector3.ZERO):
 		die()
 		
 func flash_invulnerable():
-	var mesh = $MeshInstance3D
+	var mesh = $Pivot/Protag_Main/Armature/Skeleton3D/Body
 	if mesh:
 		#flash between normal and transparent
 		var flash_count = 0
