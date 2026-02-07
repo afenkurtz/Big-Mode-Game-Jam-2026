@@ -2,10 +2,15 @@
 
 [ext_resource type="PackedScene" uid="uid://cm5mlggjlmf8i" path="res://art/Level Assets/Wall_Standard_Snow.fbx" id="1_2hqic"]
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2hqic"]
+friction = 0.0
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_wufwm"]
-size = Vector3(3.344925, 6.6603546, 3.2863922)
+size = Vector3(3.345, 6.66, 3.345)
 
 [node name="Wall_Standard" type="StaticBody3D" unique_id=736477633]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+physics_material_override = SubResource("PhysicsMaterial_2hqic")
 
 [node name="Wall_Standard_Snow" parent="." unique_id=759236646 instance=ExtResource("1_2hqic")]
 

@@ -2,13 +2,20 @@
 
 [ext_resource type="PackedScene" uid="uid://vu6posra51mr" path="res://art/Level Assets/Wall_NoSides_Snow.fbx" id="1_w42qt"]
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_w42qt"]
+friction = 0.0
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_8s1hr"]
-size = Vector3(3.3285217, 6.6603546, 3.2863922)
+size = Vector3(3.345, 6.66, 3.345)
 
 [node name="Wall_NoSides" type="StaticBody3D" unique_id=1873473387]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+physics_material_override = SubResource("PhysicsMaterial_w42qt")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1155961327]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.054, 3.335, 0.027)
 shape = SubResource("BoxShape3D_8s1hr")
 
 [node name="Wall_NoSides_Snow" parent="." unique_id=1727743391 instance=ExtResource("1_w42qt")]
+
+[editable path="Wall_NoSides_Snow"]

@@ -72,7 +72,7 @@ func _physics_process(delta):
 	
 	# Apply gravity
 	if not is_on_floor():
-		velocity.y -= gravity * delta/1.5
+		velocity.y -= gravity * delta
 	
 	# Get mouse position in world space
 	var mouse_pos = get_viewport().get_mouse_position()
@@ -91,6 +91,13 @@ func _physics_process(delta):
 		direction.y=0
 		# Rotate character model to face cursor
 		rotate_character_to_cursor(direction)
+			
+	if direction.length() > 0.1:
+		#Rotate character and handle movement
+		rotate_character_to_cursor(direction)
+	else:
+		if velocity.length() > 0.1:
+			direction = Vector3(velocity.x, 0, velocity.z).normalized()
 	
 	# Handle burst toward mouse
 	if Input.is_action_just_pressed("move_forward") and result:
@@ -123,7 +130,7 @@ func _physics_process(delta):
 			else:
 				print("Combo window expired! Can't attack yet.")
 	
-	# Optional: backward burst (away from mouse)
+#backward burst (away from mouse)
 	if Input.is_action_just_pressed("fire_gun") and result:
 		# Checks to see if we have ammo
 		if current_ammo >= 1.0:
@@ -173,6 +180,27 @@ func _physics_process(delta):
 			
 
 	move_and_slide()
+	preserve_wall_momentum_with_boost()
+	
+	# Preserve/boost momentum when hitting walls
+func preserve_wall_momentum_with_boost():
+	for i in range(get_slide_collision_count()):
+		var collision = get_slide_collision(i)
+		var normal = collision.get_normal()
+		
+		#Only handle wall collisions
+		if abs(normal.y) < 0.5:
+			var velocity_2d = Vector3(velocity.x, 0 , velocity.z)
+			var speed = velocity_2d.length()
+			
+			if speed > 0.1: # Only if actually moving
+				# Deflect velocity along wall with slight boost
+				var deflected = velocity_2d - normal * velocity_2d.dot(normal)
+				deflected = deflected.normalized() * speed * 1.02 # 2% boost to compensate for losses
+			
+				velocity.x = deflected.x
+				velocity.z = deflected.z
+			return
 	
 	if is_boosting:
 		check_boost_collisions()
@@ -337,6 +365,10 @@ func _ready():
 	current_ammo = max_ammo
 	print ("Player health: ", current_health)
 	print ("Player ammo: ", current_ammo)
+	
+	wall_min_slide_angle = 0.0
+	floor_stop_on_slope = false
+	floor_block_on_wall = false
 	
 func heal(amount: float) -> float:
 	var old_health = current_health

@@ -4,7 +4,7 @@ extends Control
 @onready var options_button = $MenuContainer/ButtonContainer/OptionsButton
 @onready var quit_button = $MenuContainer/ButtonContainer/QuitButton
 
-var game_scene_path = "res://scenes/test_map.tscn"
+var game_scene_path = "res://scenes/levels/level0.tscn"
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

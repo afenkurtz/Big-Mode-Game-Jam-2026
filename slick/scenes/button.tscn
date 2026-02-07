@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://kl5o7g2s1a4k"]
+
+[ext_resource type="Script" uid="uid://bfspaqy2ugcpa" path="res://scripts/button.gd" id="1_mi6dp"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0vvm8"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_r04n3"]
+size = Vector3(0.8, 0.3, 0.8)
+
+[sub_resource type="BoxMesh" id="BoxMesh_n4tde"]
+size = Vector3(1, 0.05, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mi6dp"]
+albedo_color = Color(0.20784314, 0.20784314, 0.20784314, 1)
+
+[node name="Button" type="Area3D" unique_id=491910288]
+script = ExtResource("1_mi6dp")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=690649607]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 0)
+shape = SubResource("BoxShape3D_0vvm8")
+
+[node name="ButtonPad" type="MeshInstance3D" parent="." unique_id=357625248]
+mesh = SubResource("BoxMesh_r04n3")
+
+[node name="ButtonBase" type="MeshInstance3D" parent="." unique_id=649500552]
+mesh = SubResource("BoxMesh_n4tde")
+surface_material_override/0 = SubResource("StandardMaterial3D_mi6dp")

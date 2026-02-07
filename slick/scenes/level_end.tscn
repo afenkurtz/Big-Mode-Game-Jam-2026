@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://ck2q45e0djpg6"]
+
+[ext_resource type="Script" uid="uid://cpulbuhed0nxg" path="res://scripts/level_end.gd" id="1_v06a4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7luy0"]
+
+[node name="LevelEnd" type="Area3D" unique_id=184394478]
+script = ExtResource("1_v06a4")
+next_level_path = "uid://dbna4owvradr3"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1422139122]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+shape = SubResource("BoxShape3D_7luy0")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=847874985]

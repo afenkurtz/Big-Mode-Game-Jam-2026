@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://b5byinxclp7iq"]
 
 [ext_resource type="Script" uid="uid://danvsfhnseroq" path="res://scripts/bumper.gd" id="1_y1o0u"]
+[ext_resource type="Shader" uid="uid://dxmmdqlexoos8" path="res://shaders/player_silhouette.gdshader" id="2_63qnk"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_vcboo"]
 
@@ -10,6 +11,11 @@ albedo_color = Color(0.7716319, 0.3484547, 1, 1)
 [sub_resource type="SphereMesh" id="SphereMesh_h31vo"]
 material = SubResource("StandardMaterial3D_hrt4a")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c24v7"]
+render_priority = 0
+shader = ExtResource("2_63qnk")
+shader_parameter/silhouette_color = Color(0.3, 0.5, 1, 0.5)
+
 [node name="Bumper" type="Area3D" unique_id=96077077]
 script = ExtResource("1_y1o0u")
 
@@ -18,3 +24,4 @@ shape = SubResource("SphereShape3D_vcboo")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=891682823]
 mesh = SubResource("SphereMesh_h31vo")
+surface_material_override/0 = SubResource("ShaderMaterial_c24v7")
