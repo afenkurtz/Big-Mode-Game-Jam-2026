@@ -1,5 +1,9 @@
 extends CharacterBody3D
 
+@onready var pivot = $Pivot
+
+var animation_tree: AnimationTree
+
 # Movement parameters
 @export var chase_force = 200.0
 @export var friction_coefficient = 0.95
@@ -42,6 +46,18 @@ func _ready():
 		print("Enemy found player: ", player.name)
 	
 	add_to_group("enemy")
+	
+	animation_tree = $AnimationTree
+	animation_tree.connect("animation_finished", _on_animation_finished)
+	
+	
+func _on_animation_finished(anim_name: String):
+	if anim_name in ["get_hit", "hit", "run"]:
+		animation_tree["parameters/playback"].travel("idle")
+		
+func play_animation(anim_name: String):
+	animation_tree["parameters/playback"].travel(anim_name)
+	
 
 func _physics_process(delta):
 	# Update stun timer
@@ -84,12 +100,18 @@ func _physics_process(delta):
 	
 	# Chase and home in on player
 	if player != null:
+		play_animation("run")
+		
 		var distance_to_player = global_position.distance_to(player.global_position)
 		
 		if distance_to_player < chase_distance and distance_to_player > attack_range:
 			# Calculate direction to player
 			var direction = (player.global_position - global_position).normalized()
 			direction.y = 0  # Keep movement horizontal
+			
+			# Rotate to face player
+			var target_rotation = atan2(direction.x, direction.z)
+			pivot.rotation.y = lerp_angle(pivot.rotation.y, target_rotation, 10.0 * delta)
 			
 			# If within homing range, apply strong homing
 			if distance_to_player < homing_distance:
@@ -117,6 +139,9 @@ func _physics_process(delta):
 		
 		elif distance_to_player <= attack_range:
 			# Within attack range
+			
+			play_animation("idle")
+			
 			if attack_timer <= 0:
 				perform_melee_attack()
 				attack_timer = attack_cooldown
@@ -139,6 +164,8 @@ func _physics_process(delta):
 	move_and_slide()
 
 func take_damage(amount: float, attacker_position: Vector3 = Vector3.ZERO):
+	play_animation("get_hit")
+	
 	current_health -= amount
 	print("Enemy took ", amount, " damage. Health: ", current_health)
 	
@@ -168,6 +195,8 @@ func perform_melee_attack():
 	
 	#Check if the player is still in range
 	if player !=null and global_position.distance_to(player.global_position) <= attack_range:
+		play_animation("hit")
+		
 		# Damage the player
 		if player.has_method("take_damage"):
 			player.take_damage(attack_damage, global_position) # pass enemy position
@@ -175,7 +204,7 @@ func perform_melee_attack():
 			
 
 func flash_red():
-	var mesh = $MeshInstance3D
+	var mesh = $Pivot/Enemy_Rat/Armature/Skeleton3D/Rat
 	if mesh:
 		var material = StandardMaterial3D.new()
 		material.albedo_color = Color.RED
@@ -186,6 +215,8 @@ func flash_red():
 			mesh.material_override = null
 
 func die():
+	play_animation("die")
+	
 	print("Enemy died!")
 	queue_free()
 
