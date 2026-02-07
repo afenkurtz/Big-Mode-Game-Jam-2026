@@ -82,8 +82,7 @@ func trigger_level_end():
 		if camera:
 			camera.reparent(self)
 			print("camera disabled")
-		player.set_process_input(false)
-		player.set_process_unhandled_input(false)
+		
 	
 	# Wait before fade
 	print("Waiting ", delay_before_fade, " seconds...")

@@ -76,9 +76,9 @@ transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, -0.8892286, -0.04067
 
 [node name="Skeleton3D" parent="Pivot/Protag_Main/Armature" parent_id_path=PackedInt32Array(1766754747, 219042000) index="0" unique_id=29145750]
 bones/0/position = Vector3(-1.1589792e-08, 0.080863714, 0.0500772)
-bones/0/rotation = Quaternion(-0.118117735, 0.0003077623, -0.0025873054, 0.9929962)
-bones/1/rotation = Quaternion(0.23030403, 3.863356e-06, -0.00087823445, 0.9731184)
-bones/2/rotation = Quaternion(-0.07310045, -0.0017323458, -0.0110998, 0.9972614)
+bones/0/rotation = Quaternion(-0.118116714, 0.0005703285, -0.004794657, 0.99298805)
+bones/1/rotation = Quaternion(0.23030408, 3.0104104e-06, -0.0006843354, 0.97311854)
+bones/2/rotation = Quaternion(-0.07308882, -0.003248727, -0.020815833, 0.997103)
 bones/3/position = Vector3(0.54708755, 0.6917355, -0.025935588)
 bones/3/rotation = Quaternion(0.37754318, -0.1622798, -0.81860936, 0.40125465)
 bones/4/rotation = Quaternion(0.505607, 0.13328657, 0.054676462, 0.85065085)
@@ -92,16 +92,16 @@ bones/10/rotation = Quaternion(0.11746692, -0.06805869, -0.13625379, 0.981328)
 bones/11/rotation = Quaternion(0.11691814, 0.08899437, 0.16980992, 0.97446126)
 bones/12/rotation = Quaternion(0.1088657, 0.08249449, 0.31753802, 0.9383563)
 bones/13/position = Vector3(0.21609454, 0.029707551, 0.14022791)
-bones/13/rotation = Quaternion(0.09619313, 0.90479046, 0.41473976, -0.0096100755)
+bones/13/rotation = Quaternion(0.09393235, 0.90515655, 0.41445225, -0.009888332)
 bones/14/rotation = Quaternion(-0.6682492, -8.6551616e-08, -2.3881585e-06, 0.74393755)
 bones/15/rotation = Quaternion(0.14007697, -1.446871e-07, -9.3089557e-07, 0.9901407)
 bones/16/position = Vector3(-0.21609454, 0.029707551, 0.14022791)
-bones/16/rotation = Quaternion(-0.13228317, 0.9011319, 0.4127974, 0.0077870693)
+bones/16/rotation = Quaternion(-0.13454117, 0.900681, 0.4130566, 0.0075251283)
 bones/17/rotation = Quaternion(-0.6669024, 8.552184e-08, 2.384732e-06, 0.7451451)
 bones/18/rotation = Quaternion(0.14007705, 1.539008e-07, 9.2088135e-07, 0.9901407)
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="Pivot/Protag_Main/Armature/Skeleton3D" index="0" unique_id=710509444]
-transform = Transform3D(-0.13976584, 0.57753134, 0.80431515, 0.914977, -0.23519266, 0.3278734, 0.3785262, 0.78175575, -0.495556, -0.5622119, 0.88834214, 0.6884786)
+transform = Transform3D(-0.13605168, 0.57657224, 0.805639, 0.91553664, -0.23753442, 0.3246069, 0.37852636, 0.7817557, -0.49555597, -0.55857813, 0.89061356, 0.6884787)
 bone_name = "wrist.r"
 bone_idx = 10
 
@@ -110,7 +110,7 @@ transform = Transform3D(-0.73726404, 0.66412205, 0.12403202, 0.3770519, 0.252134
 visible = false
 
 [node name="BoneAttachment3D2" type="BoneAttachment3D" parent="Pivot/Protag_Main/Armature/Skeleton3D" index="2" unique_id=741346567]
-transform = Transform3D(-0.13976584, 0.57753134, 0.80431515, 0.914977, -0.23519266, 0.3278734, 0.3785262, 0.78175575, -0.495556, -0.5622119, 0.88834214, 0.6884786)
+transform = Transform3D(-0.13605168, 0.57657224, 0.805639, 0.91553664, -0.23753442, 0.3246069, 0.37852636, 0.7817557, -0.49555597, -0.55857813, 0.89061356, 0.6884787)
 bone_name = "wrist.r"
 bone_idx = 10
 

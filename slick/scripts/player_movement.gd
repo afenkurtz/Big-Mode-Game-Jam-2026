@@ -501,3 +501,6 @@ func die():
 	# ToDo: Game over logic
 	get_tree().reload_current_scene() # respawns whole room for now
 	
+func disable_input():
+	set_process_input(false)
+	set_process_unhandled_input(false)
