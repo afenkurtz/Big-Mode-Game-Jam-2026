@@ -4,6 +4,10 @@ extends CanvasLayer
 @onready var health_bar = $HUDContainer/HealthBar
 @onready var cooldown_bar = $HUDContainer/CooldownBar
 @onready var coin_label = $HUDContainer/CoinLabel
+<<<<<<< HEAD
+=======
+@onready var timer_label = $HUDContainer/TimerLabel
+>>>>>>> 173d7b3 (redownload with changes to hud and addition of gamemanager)
 var player = null
 var last_ammo = 0.0
 var last_health = 0.0
@@ -35,6 +39,10 @@ func _process(delta):
 		# Always update cooldown (it changes every frame)
 		update_cooldown()
 		update_coins()
+<<<<<<< HEAD
+=======
+		update_timer()
+>>>>>>> 173d7b3 (redownload with changes to hud and addition of gamemanager)
 
 func update_hud():
 	update_ammo()
@@ -44,7 +52,14 @@ func update_ammo():
 	if player and ammo_label:
 		ammo_label.text = "Ammo: " + str(int(player.current_ammo)) + "/" + str(int(player.max_ammo))
 		
+<<<<<<< HEAD
 
+=======
+func update_timer():
+	if timer_label:
+		timer_label.text = GameManager.format_time(GameManager.current_level_time)
+		
+>>>>>>> 173d7b3 (redownload with changes to hud and addition of gamemanager)
 func update_health():
 	if player and health_bar:
 		if health_tween:
