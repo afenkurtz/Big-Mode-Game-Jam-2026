@@ -1,5 +1,9 @@
 extends CharacterBody3D
 
+@onready var pivot = $Pivot
+
+var animation_tree: AnimationTree
+
 @export var chase_force = 50 # how quickly the enemy will move toward the player
 @export var friction_coefficient = 0.99
 @export var ground_friction = 0.96
@@ -48,6 +52,16 @@ func _ready():
 	else:
 		print("ERROR: NO COLLISION SHAPE FOUND!")
 	print("===================")
+	
+	animation_tree = $AnimationTree
+	animation_tree.connect("animation_finished", _on_animation_finished)
+	
+func _on_animation_finished(anim_name: String):
+	if anim_name in ["get_hit", "hit", "run"]:
+		animation_tree["parameters/playback"].travel("idle")
+		
+func play_animation(anim_name: String):
+	animation_tree["parameters/playback"].travel(anim_name)
 		
 func _physics_process(delta):
 	# update stun timer
@@ -89,6 +103,8 @@ func _physics_process(delta):
 	
 	#checks if player is in range, if player is in range, chase player
 	if player != null:
+		play_animation("run")
+		
 		var distance_to_player = global_position.distance_to(player.global_position)
 		#print("Distance: ", distance_to_player, " | Chase distance: ", chase_distance, " | Attack range: ", attack_range)
 		if distance_to_player < chase_distance and distance_to_player > attack_range:
@@ -99,6 +115,10 @@ func _physics_process(delta):
 			# Calculate direction to predicted position
 			var direction = (predicted_position - global_position).normalized()
 			direction.y = 0
+			
+			# Rotate to face player
+			var target_rotation = atan2(direction.x, direction.z)
+			pivot.rotation.y = lerp_angle(pivot.rotation.y, target_rotation, 10.0 * delta)
 	
 			velocity.x += direction.x * chase_force * delta
 			velocity.z += direction.z * chase_force * delta
@@ -131,6 +151,8 @@ func _physics_process(delta):
 
 		
 func take_damage(amount: float, attacker_position: Vector3 = Vector3.ZERO):
+	play_animation("get_hit")
+	
 	current_health -= amount
 	print("Enemy took ", amount, " damage, Health: ", current_health)
 	
@@ -157,7 +179,7 @@ func apply_stun():
 	stun_timer = stun_duration
 	
 	# Visual feedback
-	var mesh = $MeshInstance3D
+	var mesh = $Pivot/Enemy_Rat_2/Armature_001/Skeleton3D/Rat_001
 	if mesh:
 		var stun_material = StandardMaterial3D.new()
 		stun_material.albedo_color = Color(0.5, 0.5, 0.5)
@@ -202,13 +224,15 @@ func perform_melee_attack():
 	
 	#Check if the player is still in range
 	if player !=null and global_position.distance_to(player.global_position) <= attack_range:
+		play_animation("hit")
+		
 		# Damage the player
 		if player.has_method("take_damage"):
 			player.take_damage(attack_damage, global_position)
 			print("Hit player for ", attack_damage, " damage!")
 	
 func flash_red():
-	var mesh = $MeshInstance3D
+	var mesh = $Pivot/Enemy_Rat_2/Armature_001/Skeleton3D/Rat_001
 	if mesh:
 		var material = StandardMaterial3D.new()
 		material.albedo_color = Color.RED
@@ -219,6 +243,8 @@ func flash_red():
 	mesh.material_override = null
 	
 func die():
+	play_animation("die")
+	
 	print("Enemy died!")
 	queue_free()
 		
