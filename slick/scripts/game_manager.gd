@@ -57,3 +57,4 @@ func reset_all_stats():
 	total_coins = 0
 	total_deaths = 0
 	print("All stats reset")
+	
