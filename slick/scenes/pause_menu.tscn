@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://cdsdjitqwmq25" path="res://textures/UI/button_exit_hover.png" id="7_ofnjo"]
 
 [node name="PauseMenu" type="CanvasLayer" unique_id=86275174]
+process_mode = 3
 script = ExtResource("1_n87rw")
 
 [node name="Background" type="ColorRect" parent="." unique_id=2006994655]
