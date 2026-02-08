@@ -345,8 +345,9 @@ func perform_stab(direction: Vector3):
 	print("==================")
 
 func perform_stab_anim(combo_num: int):
+	$AttackSound.play()
+	
 	# theres a better way to do this 
-	# i should really be using a different loop type...
 	# oh well
 	if combo_num == 3:
 		# Set animation tree condition is_melee_3 to true
@@ -362,6 +363,7 @@ func fire_projectile(direction: Vector3):
 	print("=== FIRING PROJECTILE ===")
 	print("Direction: ", direction)
 	
+	$GunSound.play()
 	play_animation("sit_shoot")
 	
 	if projectile_scene == null:
@@ -461,7 +463,7 @@ func take_damage(amount: float, attacker_position: Vector3 = Vector3.ZERO):
 	invulnerability_timer = invulnerability_duration
 	print("Invulnerability active for ", invulnerability_duration, "seconds")
 	
-	#ToDo: add visual and audio hit feedback here
+	$HitSound.play()
 	flash_invulnerable()
 	
 	if current_health <= 0:
@@ -498,7 +500,7 @@ func rotate_character_to_cursor(direction: Vector3):
 		
 func die():
 	print("Player died!")
-	# ToDo: Game over logic
+	# TODO: Game over logic
 	get_tree().reload_current_scene() # respawns whole room for now
 	
 func disable_input():

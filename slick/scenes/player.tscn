@@ -12,6 +12,9 @@
 [ext_resource type="Texture2D" uid="uid://dn8faon50eb3a" path="res://textures/UI/IMG_0087.png" id="6_fjrip"]
 [ext_resource type="Script" uid="uid://b2agknc037nav" path="res://scenes/camera_3d.gd" id="7_3v2ag"]
 [ext_resource type="Texture2D" uid="uid://xqjyktdradco" path="res://textures/UI/IMG_0086.png" id="7_smehm"]
+[ext_resource type="AudioStream" uid="uid://d3r77ir2rjsb4" path="res://sounds/protag_attack_freesound-community.mp3" id="13_jej6c"]
+[ext_resource type="AudioStream" uid="uid://6hyg7r6wtxe2" path="res://sounds/protag_ow_freesound_community.mp3" id="14_oprun"]
+[ext_resource type="AudioStream" uid="uid://dwchr1tfo5or0" path="res://sounds/protag_gun_freesound_community.mp3" id="15_a8ls1"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_smehm"]
 sky_top_color = Color(0.48956132, 0.77915174, 1, 1)
@@ -78,11 +81,11 @@ max_ammo = 12.0
 [node name="Protag_Main" parent="Pivot" unique_id=1766754747 instance=ExtResource("3_y4r1p")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, -0.8892286, -0.04067135)
 
-[node name="Skeleton3D" parent="Pivot/Protag_Main/Armature" parent_id_path=PackedInt32Array(1766754747, 219042000) index="0" unique_id=29145750]
+[node name="Skeleton3D" parent="Pivot/Protag_Main/Armature" parent_id_path=PackedInt32Array(1766754747, 1587764269) index="0" unique_id=1712660770]
 bones/0/position = Vector3(-1.1589792e-08, 0.080863714, 0.0500772)
-bones/0/rotation = Quaternion(-0.11810809, 0.0015400306, -0.0129467845, 0.9929152)
-bones/1/rotation = Quaternion(0.23030233, 1.7326132e-05, -0.003938694, 0.9731112)
-bones/2/rotation = Quaternion(-0.072980255, -0.009005669, -0.057702757, 0.99562204)
+bones/0/rotation = Quaternion(-0.1181034, -0.0018645015, 0.015674554, 0.9928758)
+bones/1/rotation = Quaternion(0.23030025, 2.5777854e-05, -0.005860034, 0.9731021)
+bones/2/rotation = Quaternion(-0.07296442, 0.009558977, 0.06124804, 0.99540627)
 bones/3/position = Vector3(0.54708755, 0.6917355, -0.025935588)
 bones/3/rotation = Quaternion(0.37754318, -0.1622798, -0.81860936, 0.40125465)
 bones/4/rotation = Quaternion(0.505607, 0.13328657, 0.054676462, 0.85065085)
@@ -96,16 +99,16 @@ bones/10/rotation = Quaternion(0.11746692, -0.06805869, -0.13625379, 0.981328)
 bones/11/rotation = Quaternion(0.11691814, 0.08899437, 0.16980992, 0.97446126)
 bones/12/rotation = Quaternion(0.1088657, 0.08249449, 0.31753802, 0.9383563)
 bones/13/position = Vector3(0.21609454, 0.029707551, 0.14022791)
-bones/13/rotation = Quaternion(0.08553963, 0.9064705, 0.41337046, -0.010921252)
+bones/13/rotation = Quaternion(0.11497976, 0.9015413, 0.41707277, -0.007298899)
 bones/14/rotation = Quaternion(-0.6682492, -8.6551616e-08, -2.3881585e-06, 0.74393755)
 bones/15/rotation = Quaternion(0.14007697, -1.446871e-07, -9.3089557e-07, 0.9901407)
 bones/16/position = Vector3(-0.21609454, 0.029707551, 0.14022791)
-bones/16/rotation = Quaternion(-0.1429345, 0.8989579, 0.41400656, 0.0065509067)
+bones/16/rotation = Quaternion(-0.11347471, 0.90468097, 0.4105807, 0.0099679865)
 bones/17/rotation = Quaternion(-0.6669024, 8.552184e-08, 2.384732e-06, 0.7451451)
 bones/18/rotation = Quaternion(0.14007705, 1.539008e-07, 9.2088135e-07, 0.9901407)
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="Pivot/Protag_Main/Armature/Skeleton3D" index="0" unique_id=710509444]
-transform = Transform3D(-0.115025684, 0.57097477, 0.81286937, 0.9184152, -0.25069088, 0.3060509, 0.37852636, 0.7817557, -0.49555597, -0.5457761, 0.9033803, 0.6884786)
+transform = Transform3D(-0.1642512, 0.5836306, 0.7952338, 0.9109, -0.21962143, 0.34932375, 0.37852636, 0.78175557, -0.4955559, -0.5927099, 0.8727348, 0.6884786)
 bone_name = "wrist.r"
 bone_idx = 10
 
@@ -114,14 +117,14 @@ transform = Transform3D(-0.73726404, 0.66412205, 0.12403202, 0.3770519, 0.252134
 visible = false
 
 [node name="BoneAttachment3D2" type="BoneAttachment3D" parent="Pivot/Protag_Main/Armature/Skeleton3D" index="2" unique_id=741346567]
-transform = Transform3D(-0.115025684, 0.57097477, 0.81286937, 0.9184152, -0.25069088, 0.3060509, 0.37852636, 0.7817557, -0.49555597, -0.5457761, 0.9033803, 0.6884786)
+transform = Transform3D(-0.1642512, 0.5836306, 0.7952338, 0.9109, -0.21962143, 0.34932375, 0.37852636, 0.78175557, -0.4955559, -0.5927099, 0.8727348, 0.6884786)
 bone_name = "wrist.r"
 bone_idx = 10
 
 [node name="Protag_Main_Melee" parent="Pivot/Protag_Main/Armature/Skeleton3D/BoneAttachment3D2" unique_id=1946502386 instance=ExtResource("4_d2wvv")]
 transform = Transform3D(0.13070288, -0.2500041, -0.95938385, -0.9206617, 0.32841945, -0.21101013, 0.36783308, 0.91084653, -0.18724403, -0.18103418, 0.38119137, 0.38386557)
 
-[node name="AnimationPlayer" parent="Pivot/Protag_Main" index="1" unique_id=1093979272]
+[node name="AnimationPlayer" parent="Pivot/Protag_Main" index="1" unique_id=1056431875]
 autoplay = &"sit_idle"
 
 [node name="Protag_Main_Melee_Back" parent="Pivot" unique_id=311436074 instance=ExtResource("4_d2wvv")]
@@ -232,6 +235,18 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
 theme_override_font_sizes/font_size = 24
 text = "Coins X 0"
+
+[node name="AttackSound" type="AudioStreamPlayer" parent="." unique_id=748872863]
+stream = ExtResource("13_jej6c")
+volume_db = -14.438
+
+[node name="HitSound" type="AudioStreamPlayer" parent="." unique_id=100352431]
+stream = ExtResource("14_oprun")
+volume_db = -16.817
+
+[node name="GunSound" type="AudioStreamPlayer" parent="." unique_id=1894221057]
+stream = ExtResource("15_a8ls1")
+volume_db = -19.696
 
 [editable path="Pivot/Protag_Main"]
 [editable path="Pivot/Protag_Main/Armature/Skeleton3D/BoneAttachment3D/Protag_Main_Gun"]

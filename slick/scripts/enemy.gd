@@ -195,6 +195,7 @@ func perform_melee_attack():
 	
 	#Check if the player is still in range
 	if player !=null and global_position.distance_to(player.global_position) <= attack_range:
+		$AttackSound.play()
 		play_animation("hit")
 		
 		# Damage the player
