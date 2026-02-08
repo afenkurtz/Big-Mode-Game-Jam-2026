@@ -1,6 +1,12 @@
 [gd_scene format=3 uid="uid://hsaqgp0dwgi8"]
 
 [ext_resource type="Script" uid="uid://cejpyrnso5p7h" path="res://scripts/pause_menu.gd" id="1_n87rw"]
+[ext_resource type="Texture2D" uid="uid://ua2uqmpwjqiv" path="res://textures/UI/button_play_game.png" id="2_1s2dm"]
+[ext_resource type="Texture2D" uid="uid://ctm3fyn1dn4lq" path="res://textures/UI/button_play_hover.png" id="3_88e76"]
+[ext_resource type="Texture2D" uid="uid://g1iqm2wmfoiu" path="res://textures/UI/button_restart.png" id="4_knqa7"]
+[ext_resource type="Texture2D" uid="uid://tl1pt4c1w0h6" path="res://textures/UI/button_restart_hover.png" id="5_71k7c"]
+[ext_resource type="Texture2D" uid="uid://c61t55e4g7nbr" path="res://textures/UI/button_exit.png" id="6_cmnsq"]
+[ext_resource type="Texture2D" uid="uid://cdsdjitqwmq25" path="res://textures/UI/button_exit_hover.png" id="7_ofnjo"]
 
 [node name="PauseMenu" type="CanvasLayer" unique_id=86275174]
 script = ExtResource("1_n87rw")
@@ -14,47 +20,39 @@ grow_vertical = 2
 color = Color(0, 0, 0, 0.43137255)
 metadata/_edit_lock_ = true
 
-[node name="MenuContainer" type="Control" parent="." unique_id=359419888]
-layout_mode = 3
+[node name="MenuContainer2" type="VBoxContainer" parent="." unique_id=1827908290]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -150.0
-offset_top = -100.0
-offset_right = 150.0
-offset_bottom = 100.0
+offset_left = -267.0
+offset_top = -146.5
+offset_right = 267.0
+offset_bottom = 146.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 20
 
-[node name="ButtonContainer" type="VBoxContainer" parent="MenuContainer" unique_id=982596687]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="ButtonContainer" type="VBoxContainer" parent="MenuContainer2" unique_id=1047979978]
+layout_mode = 2
+size_flags_vertical = 3
 theme_override_constants/separation = 10
 
-[node name="ResumeButton" type="Button" parent="MenuContainer/ButtonContainer" unique_id=1231656110]
-custom_minimum_size = Vector2(200, 50)
+[node name="ResumeButton" type="TextureButton" parent="MenuContainer2/ButtonContainer" unique_id=162483876]
 layout_mode = 2
-text = "Resume
-"
+texture_normal = ExtResource("2_1s2dm")
+texture_hover = ExtResource("3_88e76")
+stretch_mode = 5
 
-[node name="RestartButton" type="Button" parent="MenuContainer/ButtonContainer" unique_id=2062192836]
-custom_minimum_size = Vector2(200, 50)
+[node name="RestartButton" type="TextureButton" parent="MenuContainer2/ButtonContainer" unique_id=439234816]
 layout_mode = 2
-text = "Restart"
+texture_normal = ExtResource("4_knqa7")
+texture_hover = ExtResource("5_71k7c")
+stretch_mode = 5
 
-[node name="QuitButton" type="Button" parent="MenuContainer/ButtonContainer" unique_id=1193101414]
-custom_minimum_size = Vector2(200, 50)
+[node name="QuitButton" type="TextureButton" parent="MenuContainer2/ButtonContainer" unique_id=1405894731]
 layout_mode = 2
-text = "Quit to Menu"
+texture_normal = ExtResource("6_cmnsq")
+texture_hover = ExtResource("7_ofnjo")
+stretch_mode = 5

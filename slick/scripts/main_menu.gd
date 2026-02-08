@@ -1,7 +1,6 @@
 extends Control
 
 @onready var play_button = $MenuContainer/ButtonContainer/PlayButton
-@onready var options_button = $MenuContainer/ButtonContainer/OptionsButton
 @onready var quit_button = $MenuContainer/ButtonContainer/QuitButton
 
 var game_scene_path = "res://scenes/levels/level0.tscn"
@@ -13,7 +12,6 @@ func _ready() -> void:
 	# Button Signals
 	
 	play_button.pressed.connect(_on_play_pressed)
-	options_button.pressed.connect(_on_options_pressed)
 	quit_button.pressed.connect(_on_quit_pressed)
 	
 func _on_play_pressed():
@@ -21,9 +19,6 @@ func _on_play_pressed():
 	# Load game scene
 	get_tree().change_scene_to_file(game_scene_path)
 
-func _on_options_pressed():
-	print("Options menu - TODO")
-	# TODO: Opens options
 
 func _on_quit_pressed():
 	print("Quitting game...")

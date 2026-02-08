@@ -1,6 +1,11 @@
 [gd_scene format=3 uid="uid://c7lxj6f7qenoq"]
 
 [ext_resource type="Script" uid="uid://4irhgbpyjxc0" path="res://scripts/main_menu.gd" id="1_l6cm7"]
+[ext_resource type="Texture2D" uid="uid://cawmhlgih3us" path="res://textures/UI/title_screen.jpg" id="2_wu84c"]
+[ext_resource type="Texture2D" uid="uid://ua2uqmpwjqiv" path="res://textures/UI/button_play_game.png" id="3_8ln24"]
+[ext_resource type="Texture2D" uid="uid://ctm3fyn1dn4lq" path="res://textures/UI/button_play_hover.png" id="4_oa1go"]
+[ext_resource type="Texture2D" uid="uid://c61t55e4g7nbr" path="res://textures/UI/button_exit.png" id="4_rtw2f"]
+[ext_resource type="Texture2D" uid="uid://cdsdjitqwmq25" path="res://textures/UI/button_exit_hover.png" id="6_tbmy8"]
 
 [node name="MainMenu" type="Control" unique_id=174239535]
 layout_mode = 3
@@ -11,14 +16,15 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_l6cm7")
 
-[node name="Background" type="ColorRect" parent="." unique_id=1241621869]
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1976173138]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 1)
+texture = ExtResource("2_wu84c")
+expand_mode = 2
 
 [node name="MenuContainer" type="VBoxContainer" parent="." unique_id=1697868061]
 layout_mode = 1
@@ -27,38 +33,27 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -244.0
-offset_top = -141.0
-offset_right = 256.0
-offset_bottom = 159.0
+offset_left = -254.0
+offset_top = 91.0
+offset_right = 280.0
+offset_bottom = 283.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 20
 
-[node name="TitleLabel" type="Label" parent="MenuContainer" unique_id=2051630234]
-layout_mode = 2
-theme_override_font_sizes/font_size = 48
-text = "Polar Icecapade"
-horizontal_alignment = 1
-
 [node name="ButtonContainer" type="VBoxContainer" parent="MenuContainer" unique_id=62937658]
 layout_mode = 2
+size_flags_vertical = 3
 theme_override_constants/separation = 10
 
-[node name="PlayButton" type="Button" parent="MenuContainer/ButtonContainer" unique_id=922768418]
-custom_minimum_size = Vector2(200, 50)
+[node name="PlayButton" type="TextureButton" parent="MenuContainer/ButtonContainer" unique_id=1026356409]
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "Play"
+texture_normal = ExtResource("3_8ln24")
+texture_hover = ExtResource("4_oa1go")
+stretch_mode = 5
 
-[node name="OptionsButton" type="Button" parent="MenuContainer/ButtonContainer" unique_id=320155791]
-custom_minimum_size = Vector2(200, 50)
+[node name="QuitButton" type="TextureButton" parent="MenuContainer/ButtonContainer" unique_id=1995765157]
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "Options"
-
-[node name="QuitButton" type="Button" parent="MenuContainer/ButtonContainer" unique_id=1964588800]
-custom_minimum_size = Vector2(200, 50)
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "Quit"
+texture_normal = ExtResource("4_rtw2f")
+texture_hover = ExtResource("6_tbmy8")
+stretch_mode = 5
