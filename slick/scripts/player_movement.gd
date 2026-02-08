@@ -45,7 +45,7 @@ var current_health = max_health
 
 # Boost system
 var is_boosting = false
-var boost_decel_rate = 0.98 # closer to 1 = slower decay
+var boost_decel_rate = 1.0 # closer to 1 = slower decay
 
 # Physics
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -222,7 +222,7 @@ func check_boost_collisions():
 		var collision = get_slide_collision(i)
 		var collider = collision.get_collider()
 		
-		if collider and collider.is_in_group("enemy"):
+		if collider and collider.is_in_group("enemy") and collider.is_in_group("breakable"):
 			print("Boost collision into enemy")
 			
 			# Damage the enemy

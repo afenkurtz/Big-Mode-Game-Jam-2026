@@ -19,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://wjntdoke7t0y" path="res://scenes/tree_1_no_snow.tscn" id="17_luu1i"]
 [ext_resource type="PackedScene" uid="uid://bdv63m6mw6i6y" path="res://scenes/tree_2_no_snow.tscn" id="18_db1u1"]
 [ext_resource type="PackedScene" uid="uid://cny5rofvvwpl" path="res://scenes/coin.tscn" id="19_3ebcg"]
+[ext_resource type="PackedScene" uid="uid://hsaqgp0dwgi8" path="res://scenes/pause_menu.tscn" id="20_luu1i"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_vcnxx"]
 
@@ -2242,6 +2243,7 @@ permanent = true
 
 [node name="LevelEnd" parent="." unique_id=184394478 instance=ExtResource("11_db1u1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -40.80053)
+next_level_path = "uid://wmcmidpok3gh"
 
 [node name="Gates" type="Node3D" parent="." unique_id=668835906]
 
@@ -2251,7 +2253,7 @@ required_buttons = 1
 
 [node name="GateEnd" parent="Gates" unique_id=757247587 instance=ExtResource("10_luu1i")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -1.5935606, 0, -31.253288)
-required_buttons = 1
+required_buttons = 3
 
 [node name="Gate2" parent="Gates" unique_id=1890541148 instance=ExtResource("10_luu1i")]
 transform = Transform3D(-8.742278e-08, 0, -2, 0, 2, 0, 2, 0, -8.742278e-08, -16.028065, 0, -22.18055)
@@ -2753,3 +2755,5 @@ transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, -85.799995, 0, 26.4)
 
 [node name="Coin52" parent="Coins" unique_id=73930062 instance=ExtResource("19_3ebcg")]
 transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, -84.479996, 0, 31.019999)
+
+[node name="PauseMenu" parent="." unique_id=86275174 instance=ExtResource("20_luu1i")]

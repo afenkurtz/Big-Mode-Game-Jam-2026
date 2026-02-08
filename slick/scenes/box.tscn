@@ -13,8 +13,8 @@ uv1_triplanar = true
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ks2v0"]
 
-[node name="StaticBody3D" type="StaticBody3D" unique_id=1520577594 groups=["breakable"]]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+[node name="box" type="StaticBody3D" unique_id=1520577594 groups=["breakable"]]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 script = ExtResource("1_3inec")
 health_pickup_scene = ExtResource("2_ks2v0")
 

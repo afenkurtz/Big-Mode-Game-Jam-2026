@@ -59,7 +59,6 @@ func update_health():
 		).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		
 func update_coins(): 
-	print("update coins called")
 	if player and coin_label:
 		coin_label.text = "🪙 X " + str(player.coins_collected)
 
