@@ -164,6 +164,7 @@ func _physics_process(delta):
 	move_and_slide()
 
 func take_damage(amount: float, attacker_position: Vector3 = Vector3.ZERO):
+	$HitSound.play()
 	play_animation("get_hit")
 	
 	current_health -= amount
@@ -216,6 +217,7 @@ func flash_red():
 			mesh.material_override = null
 
 func die():
+	$DieSound.play()
 	play_animation("die")
 	
 	print("Enemy died!")

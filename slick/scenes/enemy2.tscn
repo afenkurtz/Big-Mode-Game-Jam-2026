@@ -3,6 +3,9 @@
 [ext_resource type="Script" uid="uid://j0mwfqhme27r" path="res://scripts/enemy2.gd" id="1_wc7mj"]
 [ext_resource type="PackedScene" uid="uid://cj3a212jx2g0t" path="res://art/Enemies/Enemy_Rat_2.glb" id="2_mhmjl"]
 [ext_resource type="PackedScene" uid="uid://cvyyyrohovvw4" path="res://art/Enemies/Enemy_Halberd.glb" id="3_23kvp"]
+[ext_resource type="AudioStream" uid="uid://eudv2etwtgaq" path="res://sounds/enemy_attack_yoguard.mp3" id="4_lsk8u"]
+[ext_resource type="AudioStream" uid="uid://bq46ev20tc0wk" path="res://sounds/enemy_hit_tanweraman.mp3" id="5_thqno"]
+[ext_resource type="AudioStream" uid="uid://r4stivcnj2i8" path="res://sounds/enemy_die.mp3" id="6_l4k25"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4gyqm"]
 
@@ -53,18 +56,18 @@ transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 0, -1, 0)
 
 [node name="Skeleton3D" parent="Pivot/Enemy_Rat_2/Armature_001" parent_id_path=PackedInt32Array(300349639, 415278510) index="0" unique_id=1997759546]
 bones/0/rotation = Quaternion(-0.01481799, 0, 0, 0.9998902)
-bones/1/rotation = Quaternion(-0.00041841558, -0.2416582, -0.0072684316, 0.97033423)
-bones/2/rotation = Quaternion(0.07580429, -0.19278705, 0.009035687, 0.9782665)
-bones/3/rotation = Quaternion(0.49857554, -0.04498751, -0.050386462, 0.8642105)
-bones/4/position = Vector3(0.18626058, 0.8764303, -0.0431493)
-bones/4/rotation = Quaternion(-0.19030236, 0.19391178, -0.7074082, 0.6525005)
-bones/5/rotation = Quaternion(7.883127e-05, -0.00015433006, -0.37281692, 0.9279049)
-bones/6/rotation = Quaternion(-8.759371e-05, 5.675441e-05, -0.1431361, 0.989703)
+bones/1/rotation = Quaternion(-0.00042920702, -0.096145436, -0.002891797, 0.995363)
+bones/2/rotation = Quaternion(0.07703023, -0.07644428, 0.0035828575, 0.9940874)
+bones/3/rotation = Quaternion(0.5685049, 9.738449e-07, 8.2371076e-07, 0.8226799)
+bones/4/position = Vector3(0.205638, 0.8743681, 0.024440467)
+bones/4/rotation = Quaternion(-0.06957981, 0.08417019, -0.7324384, 0.6720179)
+bones/5/rotation = Quaternion(0.0002223024, -0.00043582686, -0.37280467, 0.9279098)
+bones/6/rotation = Quaternion(-0.00024728192, 0.00015996018, -0.14314398, 0.98970187)
 bones/7/rotation = Quaternion(6.8461105e-08, -3.4030631e-07, -0.06989565, 0.99755436)
 bones/8/rotation = Quaternion(1.922716e-08, 3.4236606e-07, -0.17424768, 0.9847019)
 bones/9/rotation = Quaternion(0.1250023, -0.00827122, -0.06551395, 0.9899566)
-bones/10/position = Vector3(-0.17772269, 0.91096187, 0.18327752)
-bones/10/rotation = Quaternion(0.21011162, 0.17224929, 0.7129925, 0.64639395)
+bones/10/position = Vector3(-0.19710012, 0.91302395, 0.11568774)
+bones/10/rotation = Quaternion(0.09004029, 0.0617954, 0.73466456, 0.6695836)
 bones/11/rotation = Quaternion(1.0224207e-07, -1.2058125e-07, 0.24788342, 0.96878994)
 bones/12/rotation = Quaternion(0.63013, 0.27200916, 0.24774681, 0.68378997)
 bones/13/rotation = Quaternion(0.018713232, 0.11957277, -0.08384186, 0.989102)
@@ -75,7 +78,7 @@ bones/18/position = Vector3(-0.23190789, 0.42624256, 0.03652305)
 bones/19/rotation = Quaternion(0.5641133, -0.0009290585, -0.0013606431, 0.82569575)
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="Pivot/Enemy_Rat_2/Armature_001/Skeleton3D" index="1" unique_id=947510561]
-transform = Transform3D(-0.9850474, -0.17213418, -0.0071490854, -0.009488121, 0.012769904, 0.99987346, -0.17202118, 0.98499054, -0.014212292, -0.9489826, 1.7719637, 0.3674638)
+transform = Transform3D(-0.9779893, -0.20854937, -0.0066170692, -0.009488106, 0.0127699785, 0.9998732, -0.20843852, 0.9779282, -0.014467705, -0.94813293, 1.7719638, 0.33500072)
 bone_name = "wrist.r"
 bone_idx = 13
 
@@ -97,5 +100,17 @@ mesh = SubResource("CapsuleMesh_qi2p4")
 root_node = NodePath("../Pivot/Enemy_Rat_2")
 tree_root = SubResource("AnimationNodeStateMachine_5byvk")
 anim_player = NodePath("../Pivot/Enemy_Rat_2/AnimationPlayer")
+
+[node name="AttackSound" type="AudioStreamPlayer" parent="." unique_id=1339046495]
+stream = ExtResource("4_lsk8u")
+volume_db = -19.032
+
+[node name="HitSound" type="AudioStreamPlayer" parent="." unique_id=956795080]
+stream = ExtResource("5_thqno")
+volume_db = -12.914
+
+[node name="DieSound" type="AudioStreamPlayer" parent="." unique_id=1590551588]
+stream = ExtResource("6_l4k25")
+volume_db = -23.11
 
 [editable path="Pivot/Enemy_Rat_2"]

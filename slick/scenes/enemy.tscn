@@ -4,6 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://dtvvo8u2gaqbo" path="res://art/Enemies/Enemy_Rat.glb" id="2_4ra3w"]
 [ext_resource type="PackedScene" uid="uid://cvyyyrohovvw4" path="res://art/Enemies/Enemy_Halberd.glb" id="3_5uy6h"]
 [ext_resource type="AudioStream" uid="uid://eudv2etwtgaq" path="res://sounds/enemy_attack_yoguard.mp3" id="4_5uy6h"]
+[ext_resource type="AudioStream" uid="uid://bq46ev20tc0wk" path="res://sounds/enemy_hit_tanweraman.mp3" id="5_xwavj"]
+[ext_resource type="AudioStream" uid="uid://r4stivcnj2i8" path="res://sounds/enemy_die.mp3" id="6_nenq2"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4gyqm"]
 
@@ -54,18 +56,18 @@ transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 0, -1, 0)
 
 [node name="Skeleton3D" parent="Pivot/Enemy_Rat/Armature" parent_id_path=PackedInt32Array(276111793, 282877066) index="0" unique_id=881282558]
 bones/0/rotation = Quaternion(-0.01481799, 0, 0, 0.9998902)
-bones/1/rotation = Quaternion(-0.00041590453, -0.26391804, -0.007937951, 0.9645124)
-bones/2/rotation = Quaternion(0.07551947, -0.21064624, 0.009872732, 0.9745909)
-bones/3/rotation = Quaternion(0.5685049, 9.686952e-07, 8.294827e-07, 0.8226799)
-bones/4/position = Vector3(0.18329674, 0.8767455, -0.053487457)
-bones/4/rotation = Quaternion(-0.20864128, 0.21053056, -0.70174944, 0.6478375)
-bones/5/rotation = Quaternion(0.0001796508, -0.0003521426, -0.37280828, 0.92790836)
-bones/6/rotation = Quaternion(-0.00019980926, 0.00012927884, -0.14314164, 0.9897022)
+bones/1/rotation = Quaternion(-0.00042127213, -0.21332806, -0.0064163376, 0.9769595)
+bones/2/rotation = Quaternion(0.0761309, -0.16991477, 0.007963691, 0.9824814)
+bones/3/rotation = Quaternion(0.5687933, 0.00019534376, 0.00021851434, 0.82248044)
+bones/4/position = Vector3(0.19010435, 0.87602115, -0.029741965)
+bones/4/rotation = Quaternion(-0.16686614, 0.17265323, -0.71390563, 0.6577883)
+bones/5/rotation = Quaternion(6.279539e-05, -0.00012286699, -0.37281832, 0.92790437)
+bones/6/rotation = Quaternion(-6.974525e-05, 4.521903e-05, -0.14313522, 0.9897032)
 bones/7/rotation = Quaternion(6.8461105e-08, -3.4030631e-07, -0.06989565, 0.99755436)
 bones/8/rotation = Quaternion(1.922716e-08, 3.4236606e-07, -0.17424768, 0.9847019)
 bones/9/rotation = Quaternion(0.1250023, -0.00827122, -0.06551395, 0.9899566)
-bones/10/position = Vector3(-0.17475887, 0.9106464, 0.19361567)
-bones/10/rotation = Quaternion(0.22829974, 0.18903285, 0.7078433, 0.64117366)
+bones/10/position = Vector3(-0.18156646, 0.9113708, 0.1698702)
+bones/10/rotation = Quaternion(0.1868475, 0.15080245, 0.71883863, 0.6523938)
 bones/11/rotation = Quaternion(1.0224207e-07, -1.2058125e-07, 0.24788342, 0.96878994)
 bones/12/rotation = Quaternion(0.63013, 0.27200916, 0.24774681, 0.68378997)
 bones/13/rotation = Quaternion(0.018713232, 0.11957277, -0.08384186, 0.989102)
@@ -76,7 +78,7 @@ bones/18/position = Vector3(-0.23190789, 0.42624256, 0.03652305)
 bones/19/rotation = Quaternion(0.5641133, -0.0009290585, -0.0013606431, 0.82569575)
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="Pivot/Enemy_Rat/Armature/Skeleton3D" index="1" unique_id=1447770294]
-transform = Transform3D(-0.98599315, -0.16662751, -0.0072285086, -0.00948821, 0.012769887, 0.9998733, -0.16651423, 0.985937, -0.014172088, -0.9510243, 1.7719635, 0.37124863)
+transform = Transform3D(-0.9837743, -0.17927104, -0.007046014, -0.00948824, 0.012769928, 0.9998736, -0.17915837, 0.9837166, -0.01426382, -0.94710267, 1.7719637, 0.36172494)
 bone_name = "wrist.r"
 bone_idx = 13
 
@@ -102,6 +104,14 @@ anim_player = NodePath("../Pivot/Enemy_Rat/AnimationPlayer")
 [node name="AttackSound" type="AudioStreamPlayer" parent="." unique_id=1222330981]
 stream = ExtResource("4_5uy6h")
 volume_db = -19.032
+
+[node name="HitSound" type="AudioStreamPlayer" parent="." unique_id=534937027]
+stream = ExtResource("5_xwavj")
+volume_db = -12.914
+
+[node name="DieSound" type="AudioStreamPlayer" parent="." unique_id=87013134]
+stream = ExtResource("6_nenq2")
+volume_db = -23.11
 
 [editable path="Pivot/Enemy_Rat"]
 [editable path="Pivot/Enemy_Rat/Armature/Skeleton3D/BoneAttachment3D/Enemy_Halberd"]

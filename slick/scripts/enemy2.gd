@@ -151,6 +151,7 @@ func _physics_process(delta):
 
 		
 func take_damage(amount: float, attacker_position: Vector3 = Vector3.ZERO):
+	$HitSound.play()
 	play_animation("get_hit")
 	
 	current_health -= amount
@@ -224,6 +225,7 @@ func perform_melee_attack():
 	
 	#Check if the player is still in range
 	if player !=null and global_position.distance_to(player.global_position) <= attack_range:
+		$AttackSound.play()
 		play_animation("hit")
 		
 		# Damage the player
@@ -243,6 +245,7 @@ func flash_red():
 	mesh.material_override = null
 	
 func die():
+	$DieSound.play()
 	play_animation("die")
 	
 	print("Enemy died!")
