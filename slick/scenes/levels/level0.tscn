@@ -2757,6 +2757,5 @@ transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, -85.799995, 0, 26.4)
 transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, -84.479996, 0, 31.019999)
 
 [node name="PauseMenu" parent="." unique_id=86275174 instance=ExtResource("20_luu1i")]
-process_mode = 3
 
 [editable path="PauseMenu"]

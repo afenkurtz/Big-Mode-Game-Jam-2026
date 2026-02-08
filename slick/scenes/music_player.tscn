@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://dvglbpoew8hu4"]
+
+[ext_resource type="AudioStream" uid="uid://dgkwwpocey576" path="res://sounds/sonican-lo-fi-music-loop.mp3" id="1_jxdhu"]
+
+[node name="MusicPlayer" type="Node" unique_id=1252995498]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=956532283]
+process_mode = 3
+stream = ExtResource("1_jxdhu")
+volume_db = -29.229
+autoplay = true

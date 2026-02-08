@@ -14,6 +14,8 @@ func _ready() -> void:
 	play_button.pressed.connect(_on_play_pressed)
 	quit_button.pressed.connect(_on_quit_pressed)
 	
+	MusicPlayer.get_node("AudioStreamPlayer").play()
+	
 func _on_play_pressed():
 	print("Starting game...")
 	# Load game scene

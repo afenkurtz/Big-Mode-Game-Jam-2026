@@ -15,6 +15,10 @@ run/main_scene="uid://c7lxj6f7qenoq"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+MusicPlayer="*uid://dvglbpoew8hu4"
+
 [input]
 
 move_forward={
